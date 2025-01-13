@@ -24,12 +24,10 @@ public class Postule {
     private LocalDateTime creatAt;
 
     @ManyToOne
-    @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
     @ManyToOne
-    @JoinColumn(name = "etudiant_id", nullable = false)
-    private Etudiant etudiant;
+    private User etudiant;
 
     // Getters et Setters
 }

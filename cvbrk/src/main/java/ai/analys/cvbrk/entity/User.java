@@ -9,26 +9,33 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class User {
+public  class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nom;
     private String email;
     private String password;
     private String image;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime creatAt;
+
+    @OneToMany( mappedBy = "etudiant",cascade = CascadeType.ALL)
+    private List<Cv> cvs;
+    @OneToMany(mappedBy = "rh",cascade = CascadeType.ALL)
+    private List<Post> posts;
 
 
 

@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 public class Cv {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nomCv;
@@ -26,8 +26,6 @@ public class Cv {
     private LocalDateTime creatAt;
 
     @ManyToOne
-    @JoinColumn(name = "etudiant_id", nullable = false)
-    private Etudiant etudiant;
+    private User etudiant;
 
-    // Getters et Setters
 }

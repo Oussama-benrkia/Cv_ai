@@ -28,8 +28,7 @@ public class Post {
     private String email;
 
     @ManyToOne
-    @JoinColumn(name = "rh_id", nullable = false)
-    private Rh rh;
+    private User rh;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Postule> postulants;
