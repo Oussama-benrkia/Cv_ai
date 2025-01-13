@@ -1,45 +1,25 @@
 package ai.analys.cvbrk.dto;
 
-import jakarta.validation.constraints.NotBlank;
 
-public class UserRequest {
-    @NotBlank(message = "Name must not be blank")
-    private String nom;
-    @NotBlank(message = "Email must not be blank")
-    private String email;
-    @NotBlank(message = "Password must not be blank")
-    private String password;
-    private String image;
-    public UserRequest() {
-    }
-    public UserRequest(String nom, String email, String password, String image) {
-        this.nom = nom;
-        this.email = email;
-        this.password = password;
-        this.image = image;
-    }
-    public String getNom() {
-        return nom;
-    }
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    public String getImage() {
-        return image;
-    }
-    public void setImage(String image) {
-        this.image = image;
-    }
-}
+import ai.analys.cvbrk.validation.OnCreate;
+import ai.analys.cvbrk.validation.OnUpdate;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import org.springframework.web.multipart.MultipartFile;
+
+public record UserRequest(
+        @NotBlank( groups = OnCreate.class, message = "Prenom must not be blank")
+        String prenom,
+        @NotBlank(groups = OnCreate.class,message = "Nom must not be blank")
+        String nom,
+        @NotBlank(groups = OnCreate.class,message = "Email must not be blank")
+        @Email(groups = {OnCreate.class},message = "Email must be a valid email address")
+        String email,
+        @NotBlank(groups = OnCreate.class,message = "Password must not be blank")
+        @Size(groups = OnCreate.class,min = 8, message = "Password must be at least 8 characters long")
+        String password,
+        String role,
+        MultipartFile file
+) {}
+

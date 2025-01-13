@@ -14,7 +14,6 @@ public enum ImagesFolder {
         return value;
     }
 
-    // Méthode pour obtenir une constante à partir de sa valeur
     public static ImagesFolder fromValue(String value) {
         for (ImagesFolder file : ImagesFolder.values()) {
             if (file.value.equalsIgnoreCase(value)) {

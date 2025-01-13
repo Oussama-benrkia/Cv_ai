@@ -3,66 +3,71 @@ package ai.analys.cvbrk.mapper;
 import ai.analys.cvbrk.dto.PostRequest;
 import ai.analys.cvbrk.dto.PostResponse;
 import ai.analys.cvbrk.entity.Post;
-import ai.analys.cvbrk.images.ImagesFolder;
-import ai.analys.cvbrk.images.ImgService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
+import java.util.List;
 
 @Component
 public class PostMapper implements Mapper<Post, PostResponse, PostRequest> {
-
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     private final Environment environment;
-    private final ImgService imgService;
+    private final ObjectMapper objectMapper;
+
     @Autowired
-    public PostMapper(Environment environment, ImgService imgService) {
+    public PostMapper(Environment environment, ObjectMapper objectMapper) {
         this.environment = environment;
-        this.imgService = imgService;
+        this.objectMapper = objectMapper;
     }
-    @Override
-    public Post toEntity(PostRequest request) {
-        Rh rh = new Rh();
-        rh.setId(request.getRhId());
-        Post post = new Post();
-        post.setTitre(request.getTitre());
-        post.setDescription(request.getDescription());
-        if (request.getImage() != null && !request.getImage().isEmpty()) {
-            byte[] imageBytes = decodeBase64Image(request.getImage());
-            if (imageBytes != null) {
-                String path = imgService.addImage(imageBytes, ImagesFolder.POST);
-                post.setImage(path);
-            }
 
-        }
-        post.setRh(rh);
-        return post;
-    }
-    private byte[] decodeBase64Image(String base64Image){
+    @Override
+    public Post toEntity(PostRequest data) {
+        String keywordJson;
         try {
-            return  Base64.getDecoder().decode(base64Image);
-        }catch (IllegalArgumentException e){
-            return null;
+            keywordJson = objectMapper.writeValueAsString(data.keyword());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Error while serializing keywords", e);
         }
+
+        return Post.builder()
+                .titre(data.titre())
+                .description(data.description())
+                .keyword(keywordJson)
+                .lien(data.lien()!=null?data.lien():"")
+                .email(data.email()!=null?data.email():"")
+                .build();
     }
 
     @Override
-    public PostResponse toResponse(Post post) {
+    public PostResponse toResponse(Post entity) {
         String serverAddress = environment.getProperty("server.address", "localhost");
         String serverPort = environment.getProperty("server.port", "8080");
-        String imageUrl = "";
-        if (post.getImage() != null && !post.getImage().isEmpty()) {
-            imageUrl = "http://" + serverAddress + ":" + serverPort + "/api/image/" + post.getImage();
+
+        String imageUrl = (entity.getImage() != null)
+                ? String.format("http://%s:%s/api/images/%s", serverAddress, serverPort, entity.getImage())
+                : null;
+
+        List<String> keywords;
+        try {
+            keywords = objectMapper.readValue(entity.getKeyword(), List.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Error while deserializing keywords", e);
         }
-        PostResponse response = new PostResponse();
-        response.setId(post.getId());
-        response.setTitre(post.getTitre());
-        response.setDescription(post.getDescription());
-        response.setImage(imageUrl);
-        response.setCreatedAt(post.getCreatAt());
-        return response;
+
+        return PostResponse.builder()
+                .id(entity.getId())
+                .titre(entity.getTitre())
+                .description(entity.getDescription())
+                .createdAt(entity.getCreatAt())
+                .keyword(keywords)
+                .Lien(entity.getLien())
+                .email(entity.getEmail())
+                .image(imageUrl)
+                .build();
     }
 }

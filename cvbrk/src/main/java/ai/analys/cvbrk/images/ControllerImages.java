@@ -1,6 +1,5 @@
 package ai.analys.cvbrk.images;
 
-import org.slf4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +12,6 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/image")
 public class ControllerImages {
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(ControllerImages.class);
     private final ImgService imgService;
 
     public ControllerImages(ImgService imgService) {
