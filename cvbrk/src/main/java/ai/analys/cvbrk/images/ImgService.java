@@ -1,8 +1,8 @@
 package ai.analys.cvbrk.images;
 
+import ai.analys.cvbrk.images.ImagesFolder;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.UUID;
-
+import java.util.Base64;
 
 @Service
 public class ImgService {
@@ -19,51 +19,45 @@ public class ImgService {
     private static final String UPLOADDIRECTORY = "uploads";
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(ImgService.class);
 
+
     public byte[] imageToByte(String filename) throws IOException {
         Path uploadDirectoryPath = Paths.get(System.getProperty("user.dir"), UPLOADDIRECTORY);
         Path filePath = uploadDirectoryPath.resolve(filename);
         return Files.readAllBytes(filePath);
     }
 
-    public String addImage(MultipartFile file, ImagesFolder folder) {
-        if (file == null || file.isEmpty()) {
+    public String addImage(byte[] fileBytes, ImagesFolder folder) {
+        if (fileBytes == null || fileBytes.length == 0) {
             return "";
         }
-
         try {
-            String originalFileName = file.getOriginalFilename();
-            if (originalFileName == null) {
-                throw new IllegalArgumentException("File name is null.");
-            }
-            String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-            String uniqueFileName = this.genrator(folder.toString()) + fileExtension;
+            String uniqueFileName = this.genrator(folder.toString()) + ".jpg";
             Path uploadDirPath = Paths.get(UPLOADDIRECTORY).toAbsolutePath();
             Path folderPath = Paths.get(folder.getValue());
             Path filePath = uploadDirPath.resolve(folderPath).resolve(uniqueFileName);
             Files.createDirectories(filePath.getParent());
-            file.transferTo(filePath.toFile());
+            Files.write(filePath, fileBytes);
             return folder.getValue() + "/" + uniqueFileName;
         } catch (IOException e) {
-            log.error("Error saving file: {}", file.getOriginalFilename(), e);
-            return ""; // Return empty string on failure
-        } catch (IllegalArgumentException e) {
-            log.error("Invalid file name: {}", e.getMessage());
+            log.error("Error saving file.", e);
             return "";
         }
     }
 
     public Boolean deleteImage(String fileName) {
-        Path filePath = Paths.get(System.getProperty("user.dir"), UPLOADDIRECTORY, fileName); // Dynamically construct file path
+        Path uploadDirPath = Paths.get(UPLOADDIRECTORY).toAbsolutePath();
+        Path filePath = uploadDirPath.resolve(fileName);
         try {
             if (Files.exists(filePath)) {
-                Files.delete(filePath); // Use Files.delete to remove the file
+                Files.delete(filePath);
                 return true;
             }
         } catch (IOException e) {
-            log.error("Error deleting file: {}", filePath, e); // Log error
+            log.error("Error deleting file: {}", filePath, e);
         }
         return false;
     }
+
 
     private String genrator(String folder) {
         UUID uuid = UUID.randomUUID();
