@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: Cv_backend
+  profiles:
+    active: dev
+file:
+  upload:
+    directory: uploads
