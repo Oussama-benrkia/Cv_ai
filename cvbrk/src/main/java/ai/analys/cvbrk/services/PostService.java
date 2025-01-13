@@ -74,7 +74,7 @@ public class PostService {
     public Optional<PostResponse> update(PostRequest request, Long id) {
         Post post = findPostById(id);
         boolean change = false;
-        if (request.getTitre() != null && !request.getTitre().isEmpty() && !request.getTitre().equals(post.getTitre())) {
+       /* if (request.getTitre() != null && !request.getTitre().isEmpty() && !request.getTitre().equals(post.getTitre())) {
             post.setTitre(request.getTitre());
             change = true;
         }
@@ -96,7 +96,7 @@ public class PostService {
         }
         if (change) {
             post= postRepository.save(post);
-        }
+        }*/
         return Optional.ofNullable(postMapper.toResponse(post));
     }
     private byte[] decodeBase64Image(String base64Image){
