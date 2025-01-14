@@ -1,9 +1,11 @@
 package ai.analys.cvbrk.services;
 
+import ai.analys.cvbrk.entity.Role;
 import ai.analys.cvbrk.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -14,8 +16,10 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.Arrays;
 
 @Service
 public class JwtUtils {
@@ -29,14 +33,14 @@ public class JwtUtils {
         byte[] keyBytes = Base64.getEncoder().encode(secretString.getBytes()); // Correction : Encodage en Base64
         this.key = new SecretKeySpec(keyBytes, SignatureAlgorithm.HS256.getJcaName());
     }
-
     public String generateAccessToken(UserDetails userDetails) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expiration = now.plusSeconds(ACCESS_TOKEN_EXPIRATION_SECONDS);
-
+        User user = (User) userDetails;
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
-                .claim("role", ((User) userDetails).getRole().name())
+                .claim("role", Arrays.asList(user.getRole().name()))
+                .claim("id", user.getId())
                 .setIssuedAt(toDate(now))
                 .setExpiration(toDate(expiration))
                 .signWith(key)
@@ -55,9 +59,9 @@ public class JwtUtils {
                 .signWith(key)
                 .compact();
     }
-
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String tokenUsername = extractUsername(token);
+        final Long tokenID = extractId(token);
         final String tokenRole = extractRole(token);
         final String userRole = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -66,42 +70,49 @@ public class JwtUtils {
         return (tokenUsername.equals(userDetails.getUsername())
                 && !isTokenExpired(token)
                 && tokenRole != null
+                && tokenID != null
                 && tokenRole.equals(userRole));
     }
     public boolean isRefershTokenValid(String token, UserDetails userDetails) {
         final String tokenUsername = extractUsername(token);
-
         return (tokenUsername.equals(userDetails.getUsername())
                 && !isTokenExpired(token)
-                );
+        );
     }
+
+    public <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimResolver.apply(claims);
+    }
+
+
+    public String extractUsername(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
+
 
     public String extractRole(String token) {
-        return extractClaims(token, claims -> claims.get("role", String.class));
+        return extractClaim(token, claims -> claims.get("role", List.class).get(0).toString());
     }
 
+    public List<String> extractRoles(String token) {
+        return extractClaim(token, claims -> claims.get("role", List.class));
+    }
+    public Long extractId(String token) {
+        return extractClaim(token, claims -> claims.get("id", Long.class));
+    }
+    private Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+    }
     private boolean isTokenExpired(String token) {
         LocalDateTime expiration = extractExpiration(token);
         return expiration.isBefore(LocalDateTime.now());
     }
 
-    public String extractUsername(String token) {
-        return extractClaims(token, Claims::getSubject);
-    }
-
     private LocalDateTime extractExpiration(String token) {
-        return extractClaims(token, claims ->
+        return extractClaim(token, claims ->
                 claims.getExpiration().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
         );
-    }
-
-    private <T> T extractClaims(String token, Function<Claims, T> claimsResolver) {
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-        return claimsResolver.apply(claims);
     }
 
     private Date toDate(LocalDateTime localDateTime) {

@@ -41,7 +41,7 @@ public class PostService {
         this.objectMapper = objectMapper;
 
     }
-    private Post findPostById(Long id) {
+    public Post findPostById(Long id) {
         return postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Post with ID " + id + " not found"));
     }
@@ -79,6 +79,8 @@ public class PostService {
         }
         String path=imgService.addImage(request.image(),ImagesFolder.POST);
         post.setImage(path);
+        User user=userService.getCurrentUser();
+        post.setRh(user);
         Post savedPost = postRepository.save(post);
         return Optional.ofNullable(postMapper.toResponse(savedPost));
     }
