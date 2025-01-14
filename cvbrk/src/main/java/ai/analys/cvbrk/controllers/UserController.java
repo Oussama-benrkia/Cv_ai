@@ -9,6 +9,7 @@ import ai.analys.cvbrk.validation.OnCreate;
 import ai.analys.cvbrk.validation.OnUpdate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -80,6 +81,7 @@ public class UserController {
 
 
     @PutMapping(path = "/{id}")
+    @PreAuthorize("hasRole('ADMIN')") // Restricts access to users with the RH role
     public ResponseEntity<UserResponse> updateUser(
             @PathVariable Long id,
             @Validated(OnUpdate.class) @ModelAttribute UserRequest request) {
@@ -91,6 +93,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ADMIN')") // Restricts access to users with the RH role
     public void deleteUser(@PathVariable Long id) {
         userService.delete(id);
     }
