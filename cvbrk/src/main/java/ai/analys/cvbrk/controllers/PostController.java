@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,7 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
+
     public ResponseEntity<PostResponse> findById(@PathVariable Long id) {
         return postService.findById(id)
                 .map(ResponseEntity::ok)
@@ -45,6 +47,7 @@ public class PostController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('RH')") // Restricts access to users with the RH role
     public ResponseEntity<PostResponse> savePost(
             @Validated(OnCreate.class)  @ModelAttribute PostRequest request
     ) throws JsonProcessingException {
@@ -55,6 +58,7 @@ public class PostController {
 
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('RH')") // Restricts access to users with the RH role
     public ResponseEntity<PostResponse> updatePost(
             @PathVariable Long id,
             @Validated(OnUpdate.class) @ModelAttribute PostRequest request
@@ -65,6 +69,7 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('RH')") // Restricts access to users with the RH role
     public ResponseEntity<Void> deletePost(@PathVariable Long id) {
         postService.delete(id);
         return ResponseEntity.noContent().build();
@@ -82,6 +87,7 @@ public class PostController {
         return ResponseEntity.ok(postService.findAllByRhId(rhId));
     }
     @GetMapping("/my")
+    @PreAuthorize("hasRole('RH')") // Restricts access to users with the RH role
     public ResponseEntity<PageResponse<PostResponse>> findmypost(
                                                                     @RequestParam(defaultValue = "0") int page,
                                                                     @RequestParam(defaultValue = "10") int size
@@ -89,6 +95,7 @@ public class PostController {
         return ResponseEntity.ok(postService.findAllMypost(page, size));
     }
     @GetMapping("/my/{rhId}")
+    @PreAuthorize("hasRole('RH')") // Restricts access to users with the RH role
     public ResponseEntity<List<PostResponse>> findmypost(@PathVariable Long rhId) {
         return ResponseEntity.ok(postService.findAllMypost());
     }
