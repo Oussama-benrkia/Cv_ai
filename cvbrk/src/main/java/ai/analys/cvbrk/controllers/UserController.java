@@ -9,6 +9,7 @@ import ai.analys.cvbrk.validation.OnCreate;
 import ai.analys.cvbrk.validation.OnUpdate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
         return userService.findById(id)
                 .map(ResponseEntity::ok)
@@ -32,6 +34,7 @@ public class UserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')") // Restricts access to users with the RH role
     public ResponseEntity<PageResponse<UserResponse>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -51,6 +54,7 @@ public class UserController {
     }
 
     @GetMapping("/list")
+    @PreAuthorize("hasRole('ADMIN')") // Restricts access to users with the RH role
     public ResponseEntity<List<UserResponse>> findAllUsers(
             @RequestParam(required = false, defaultValue = "") String search,
             @RequestParam(required = false, defaultValue = "") String role) {
@@ -70,6 +74,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('ADMIN')") // Restricts access to users with the RH role
     public ResponseEntity<UserResponse> saveUser(
             @Validated(OnCreate.class) @ModelAttribute UserRequest request) {
 
@@ -80,6 +85,7 @@ public class UserController {
 
 
     @PutMapping(path = "/{id}")
+    @PreAuthorize("hasRole('ADMIN')") // Restricts access to users with the RH role
     public ResponseEntity<UserResponse> updateUser(
             @PathVariable Long id,
             @Validated(OnUpdate.class) @ModelAttribute UserRequest request) {
@@ -91,6 +97,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ADMIN')") // Restricts access to users with the RH role
     public void deleteUser(@PathVariable Long id) {
         userService.delete(id);
     }

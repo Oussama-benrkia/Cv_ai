@@ -9,7 +9,6 @@ import ai.analys.cvbrk.entity.User;
 import ai.analys.cvbrk.mapper.CvMapper;
 import ai.analys.cvbrk.pdf.FileService;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,13 +20,19 @@ import java.util.Optional;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class CvServices {
 
     private final FileService fileService;
     private final UserService userService;
     private final CvRepository cvRepository;
     private final CvMapper cvMapper;
+
+    public CvServices(FileService fileService, UserService userService, CvRepository cvRepository, CvMapper cvMapper) {
+        this.fileService = fileService;
+        this.userService = userService;
+        this.cvRepository = cvRepository;
+        this.cvMapper = cvMapper;
+    }
 
     private PageResponse<CvResponse> createPageResponse(Page<Cv> page) {
         List<CvResponse> list = page.getContent().stream()
