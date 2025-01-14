@@ -29,11 +29,12 @@ public class User implements UserDetails {
     @Column(nullable = false, updatable = false)
     private LocalDateTime creatAt;
 
-    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Cv> cvs;
 
-    @OneToMany(mappedBy = "rh", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "rh", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Post> posts;
+
 
     public User(Long id, String nom, String prenom, String email, String password, String image, Role role, LocalDateTime creatAt, List<Cv> cvs, List<Post> posts) {
         this.id = id;
@@ -57,7 +58,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+        return List.of(new SimpleGrantedAuthority( role.name()));
     }
 
     @Override

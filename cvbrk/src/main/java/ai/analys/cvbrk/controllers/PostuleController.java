@@ -24,14 +24,16 @@ public class PostuleController {
     }
 
     @PostMapping
-    public ResponseEntity<Optional<PostuleResponse>> addPostule(@RequestBody @Valid PostuleRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(postuleeService.add(request));
+    public ResponseEntity<PostuleResponse> addPostule(@RequestBody @Valid PostuleRequest request) {
+        return postuleeService.add(request)
+                .map(response -> ResponseEntity.status(HttpStatus.CREATED).body(response))
+                .orElse(ResponseEntity.badRequest().build());
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Optional<PostuleResponse>> deletePostule(@PathVariable Long id) {
-        return ResponseEntity.ok(postuleeService.deletePostule(id));
+    public void deletePostule(@PathVariable Long id) {
+        postuleeService.deletePostule(id);
     }
 
     @GetMapping
