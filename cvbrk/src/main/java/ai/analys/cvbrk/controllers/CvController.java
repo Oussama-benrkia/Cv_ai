@@ -4,7 +4,6 @@ import ai.analys.cvbrk.common.PageResponse;
 import ai.analys.cvbrk.dto.CvRequest;
 import ai.analys.cvbrk.dto.CvResponse;
 import ai.analys.cvbrk.services.CvServices;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +12,13 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/cvs")
-@RequiredArgsConstructor
 public class CvController {
 
     private final CvServices cvServices;
+
+    public CvController(CvServices cvServices) {
+        this.cvServices = cvServices;
+    }
 
     @PostMapping
     public ResponseEntity<CvResponse> createCv(@ModelAttribute CvRequest cvRequest) {
@@ -52,6 +54,7 @@ public class CvController {
         cvServices.deleteCv(id);
         return ResponseEntity.noContent().build();
     }
+
     @GetMapping("/search")
     public ResponseEntity<PageResponse<CvResponse>> searchCvsByTitre(
             @RequestParam(defaultValue = "0") int page,
@@ -61,6 +64,7 @@ public class CvController {
         PageResponse<CvResponse> response = cvServices.findAllofUserByTitre(page, size, titre);
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("/search/all")
     public ResponseEntity<List<CvResponse>> searchCvsByTitreWithoutPagination(@RequestParam String titre) {
         List<CvResponse> response = cvServices.findAllofUserByTitre(titre);

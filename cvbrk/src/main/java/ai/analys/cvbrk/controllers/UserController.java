@@ -26,6 +26,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
         return userService.findById(id)
                 .map(ResponseEntity::ok)
@@ -33,6 +34,7 @@ public class UserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')") // Restricts access to users with the RH role
     public ResponseEntity<PageResponse<UserResponse>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -52,6 +54,7 @@ public class UserController {
     }
 
     @GetMapping("/list")
+    @PreAuthorize("hasRole('ADMIN')") // Restricts access to users with the RH role
     public ResponseEntity<List<UserResponse>> findAllUsers(
             @RequestParam(required = false, defaultValue = "") String search,
             @RequestParam(required = false, defaultValue = "") String role) {
@@ -71,6 +74,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('ADMIN')") // Restricts access to users with the RH role
     public ResponseEntity<UserResponse> saveUser(
             @Validated(OnCreate.class) @ModelAttribute UserRequest request) {
 
