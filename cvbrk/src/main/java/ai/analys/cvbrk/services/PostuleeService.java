@@ -64,6 +64,9 @@ public class PostuleeService {
             throw new IllegalStateException("User must have at least one cv to postule");
         }
         Cv cv = cvs.get(0);
+        if(checkPostule(request.postId(), cv.getId())){
+            throw new IllegalStateException("This student has already postuled to this job");
+        }
         Postule postule = Postule.builder()
                 .etudiant(cv)
                 .post(post)
@@ -132,5 +135,14 @@ public class PostuleeService {
         return postuleRepository.findByEtudiantId(use.getId()).stream()
                 .map(postuleMapper::toResponse)
                 .toList();
+    }
+    public boolean checkPostule(Long postId, Long etudiantId) {
+        List<Postule> postules = postuleRepository.findByPostId(postId);
+        if (postules == null || postules.isEmpty()) {
+            return false;
+        }
+        return postules.stream()
+                .anyMatch(postule -> postule.getEtudiant().getId().equals(etudiantId));
+
     }
 }

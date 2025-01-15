@@ -19,13 +19,19 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 
-@RequiredArgsConstructor
+
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtils jwtUtils;
     private final UserService userService;
     private final TokenRepository tokenRepository;
+
+    public JwtAuthFilter(JwtUtils jwtUtils, UserService userService, TokenRepository tokenRepository) {
+        this.jwtUtils = jwtUtils;
+        this.userService = userService;
+        this.tokenRepository = tokenRepository;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -40,9 +46,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userService.loadUserByUsername(username);
-            boolean istokenvalid =tokenRepository.findByToken(token)
-                    .map(t->!t.isExpired() && !t.isRevoked()).orElse(false);
-            if (jwtUtils.isTokenValid(token, userDetails)&& istokenvalid) {
+            boolean istokenvalid = tokenRepository.findByToken(token)
+                    .map(t -> !t.isExpired() && !t.isRevoked()).orElse(false);
+            if (jwtUtils.isTokenValid(token, userDetails) && istokenvalid) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authToken);
