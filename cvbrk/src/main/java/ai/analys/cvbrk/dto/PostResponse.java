@@ -3,7 +3,6 @@ package ai.analys.cvbrk.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -12,13 +11,13 @@ public class PostResponse {
     private String titre;
     private String description;
     private String image;
-    private LocalDateTime createdAt;
+    private String createdAt;
     private List<String> keyword;
     private String Lien;
     private String email;
 
 
-    public PostResponse(Long id, String titre, String description, String image, LocalDateTime createdAt, List<String> keyword, String Lien, String email) {
+    public PostResponse(Long id, String titre, String description, String image, String createdAt, List<String> keyword, String Lien, String email) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -52,7 +51,7 @@ public class PostResponse {
         return this.image;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return this.createdAt;
     }
 
@@ -84,7 +83,7 @@ public class PostResponse {
         this.image = image;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -168,7 +167,7 @@ public class PostResponse {
         private String titre;
         private String description;
         private String image;
-        private LocalDateTime createdAt;
+        private String createdAt;
         private List<String> keyword;
         private String Lien;
         private String email;
@@ -196,7 +195,7 @@ public class PostResponse {
             return this;
         }
 
-        public PostResponseBuilder createdAt(LocalDateTime createdAt) {
+        public PostResponseBuilder createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }

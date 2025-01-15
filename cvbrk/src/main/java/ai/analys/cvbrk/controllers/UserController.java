@@ -8,6 +8,7 @@ import ai.analys.cvbrk.services.UserService;
 import ai.analys.cvbrk.validation.OnCreate;
 import ai.analys.cvbrk.validation.OnUpdate;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -26,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
         return userService.findById(id)
                 .map(ResponseEntity::ok)
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')") // Restricts access to users with the RH role
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<PageResponse<UserResponse>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -42,7 +43,6 @@ public class UserController {
             @RequestParam(required = false, defaultValue = "") String role) {
 
         PageResponse<UserResponse> responses;
-
         if (search.isEmpty() && role.isEmpty()) {
             responses = userService.findAll(page, size);
         } else if (search.isEmpty()) {
@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    @PreAuthorize("hasRole('ADMIN')") // Restricts access to users with the RH role
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<UserResponse>> findAllUsers(
             @RequestParam(required = false, defaultValue = "") String search,
             @RequestParam(required = false, defaultValue = "") String role) {
@@ -72,9 +72,9 @@ public class UserController {
     }
 
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ADMIN')") // Restricts access to users with the RH role
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<UserResponse> saveUser(
             @Validated(OnCreate.class) @ModelAttribute UserRequest request) {
 
@@ -84,8 +84,8 @@ public class UserController {
     }
 
 
-    @PutMapping(path = "/{id}")
-    @PreAuthorize("hasRole('ADMIN')") // Restricts access to users with the RH role
+    @PutMapping(path = "/{id}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<UserResponse> updateUser(
             @PathVariable Long id,
             @Validated(OnUpdate.class) @ModelAttribute UserRequest request) {
@@ -97,7 +97,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasRole('ADMIN')") // Restricts access to users with the RH role
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteUser(@PathVariable Long id) {
         userService.delete(id);
     }

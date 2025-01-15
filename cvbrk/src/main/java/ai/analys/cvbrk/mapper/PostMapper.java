@@ -30,6 +30,7 @@ public class PostMapper implements Mapper<Post, PostResponse, PostRequest> {
         String keywordJson;
         try {
             keywordJson = objectMapper.writeValueAsString(data.keyword());
+            System.out.println(keywordJson); // Should output ["string"]
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Error while serializing keywords", e);
         }
@@ -48,7 +49,7 @@ public class PostMapper implements Mapper<Post, PostResponse, PostRequest> {
         String serverAddress = environment.getProperty("server.address", "localhost");
         String serverPort = environment.getProperty("server.port", "8080");
 
-        String imageUrl = (entity.getImage() != null)
+        String imageUrl = (!entity.getImage().isEmpty())
                 ? String.format("http://%s:%s/api/image/%s", serverAddress, serverPort, entity.getImage())
                 : null;
 
@@ -63,7 +64,7 @@ public class PostMapper implements Mapper<Post, PostResponse, PostRequest> {
                 .id(entity.getId())
                 .titre(entity.getTitre())
                 .description(entity.getDescription())
-                .createdAt(entity.getCreatAt())
+                .createdAt(formatter.format(entity.getCreatAt()))
                 .keyword(keywords)
                 .Lien(entity.getLien())
                 .email(entity.getEmail())

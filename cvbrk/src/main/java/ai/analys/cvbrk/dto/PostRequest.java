@@ -2,6 +2,9 @@ package ai.analys.cvbrk.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import ai.analys.cvbrk.validation.OnCreate;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -13,7 +16,8 @@ public record PostRequest (
          String titre,
          @NotBlank(groups = OnCreate.class, message = "Description must not be blank")
          String description,
-         @NotBlank(groups = OnCreate.class, message = "Keyword must not be blank")
+         @NotNull(groups = OnCreate.class, message = "Keyword list must not be empty")
+         @Size(min = 1, message = "At least one keyword is required")
          List<String> keyword,
          String lien,
          String email,

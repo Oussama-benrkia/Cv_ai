@@ -4,6 +4,7 @@ import ai.analys.cvbrk.dto.RegisterRequest;
 import ai.analys.cvbrk.dto.RegisterResponse;
 import ai.analys.cvbrk.services.AuthenticationUserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class AuthController {
         this.authservice = authservice;
     }
 
-    @PostMapping(value = "/register")
+    @PostMapping(value = "/register",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<RegisterResponse> register(@Validated @ModelAttribute RegisterRequest.RegisterRequestRegister registerRequest) {
         RegisterResponse registerResponse = authservice.register(registerRequest);
         return new ResponseEntity<>(registerResponse, HttpStatus.CREATED);
@@ -32,7 +33,7 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<RegisterResponse> refreshToken(@Validated @RequestBody RegisterRequest.RegisterToken refreshTokenRequest) {
+    public ResponseEntity<RegisterResponse> refreshToken(@Validated @RequestBody RegisterRequest.RegisterTokenRequest  refreshTokenRequest) {
         RegisterResponse refreshResponse = authservice.refreshToken(refreshTokenRequest);
         if (refreshResponse != null) {
             return new ResponseEntity<>(refreshResponse, HttpStatus.OK);

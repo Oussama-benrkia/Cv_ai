@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -36,7 +37,7 @@ public class JwtUtils {
 
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
-                .claim("role", ((User) userDetails).getRole().name())
+                .claim("role", List.of(((User) userDetails).getRole().name()))
                 .setIssuedAt(toDate(now))
                 .setExpiration(toDate(expiration))
                 .signWith(key)
@@ -77,8 +78,16 @@ public class JwtUtils {
     }
 
     public String extractRole(String token) {
-        return extractClaims(token, claims -> claims.get("role", String.class));
+        return extractClaims(token, claims -> {
+            Object roleClaim = claims.get("role");
+            if (roleClaim instanceof List) {
+                return ((List<String>) roleClaim).get(0); // Assuming the first role is the desired one
+            } else {
+                return (String) roleClaim;
+            }
+        });
     }
+
 
     private boolean isTokenExpired(String token) {
         LocalDateTime expiration = extractExpiration(token);

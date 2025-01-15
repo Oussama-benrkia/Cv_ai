@@ -97,7 +97,7 @@ public class AuthenticationUserService {
     /**
      * Refreshes a user's JWT token.
      */
-    public RegisterResponse refreshToken(RegisterRequest.RegisterToken refreshTokenRequest) {
+    public RegisterResponse refreshToken(RegisterRequest.RegisterTokenRequest  refreshTokenRequest) {
         String email = jwtService.extractUsername(refreshTokenRequest.getToken());
         User user = userRepo.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("User not found."));

@@ -27,6 +27,7 @@ public class CvServices {
     private final CvRepository cvRepository;
     private final CvMapper cvMapper;
 
+
     public CvServices(FileService fileService, UserService userService, CvRepository cvRepository, CvMapper cvMapper) {
         this.fileService = fileService;
         this.userService = userService;
@@ -86,17 +87,28 @@ public class CvServices {
 
     public void deleteCv(Long id) {
         Cv cv = findCvById(id);
-        cvRepository.delete(cv);
-        fileService.deleteFile(cv.getPath());
-    }
 
+        if (cv != null) {
+            User etudiant = cv.getEtudiant();
+            if (etudiant != null) {
+                etudiant.getCvs().remove(cv);
+            }
+            if (cv.getPostulants() != null) {
+                cv.getPostulants().forEach(postule -> {
+                    postule.setEtudiant(null);
+                });
+                cv.getPostulants().clear();
+            }
+            fileService.deleteFile(cv.getPath());
+            cvRepository.delete(cv);
+        }
+    }
     public PageResponse<CvResponse> findAllofUserByTitre(int page, int size, String titre) {
         User currentUser = userService.getCurrentUser();
         Pageable pageable = PageRequest.of(page, size);
         Page<Cv> cvs = cvRepository.findAllByEtudiantAndTitreContainingIgnoreCase(currentUser, titre, pageable);
         return createPageResponse(cvs);
     }
-
     public List<CvResponse> findAllofUserByTitre(String titre) {
         User currentUser = userService.getCurrentUser();
         List<Cv> cvs = cvRepository.findAllByEtudiantAndTitreContainingIgnoreCase(currentUser, titre);

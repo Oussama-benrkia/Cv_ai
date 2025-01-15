@@ -251,63 +251,16 @@ public class RegisterRequest {
         }
     }
 
-    public static final class RegisterToken {
+    public static class RegisterTokenRequest {
         @NotBlank(message = "Token must not be blank")
-        private final
-        String token;
+        private String token;
 
-        RegisterToken(@NotBlank(message = "Token must not be blank") String token) {
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
             this.token = token;
-        }
-
-        public static RegisterTokenBuilder builder() {
-            return new RegisterTokenBuilder();
-        }
-
-        public @NotBlank(message = "Token must not be blank") String getToken() {
-            return this.token;
-        }
-
-        public boolean equals(final Object o) {
-            if (o == this) return true;
-            if (!(o instanceof RegisterToken)) return false;
-            final RegisterToken other = (RegisterToken) o;
-            final Object this$token = this.getToken();
-            final Object other$token = other.getToken();
-            if (this$token == null ? other$token != null : !this$token.equals(other$token)) return false;
-            return true;
-        }
-
-        public int hashCode() {
-            final int PRIME = 59;
-            int result = 1;
-            final Object $token = this.getToken();
-            result = result * PRIME + ($token == null ? 43 : $token.hashCode());
-            return result;
-        }
-
-        public String toString() {
-            return "RegisterRequest.RegisterToken(token=" + this.getToken() + ")";
-        }
-
-        public static class RegisterTokenBuilder {
-            private @NotBlank(message = "Token must not be blank") String token;
-
-            RegisterTokenBuilder() {
-            }
-
-            public RegisterTokenBuilder token(@NotBlank(message = "Token must not be blank") String token) {
-                this.token = token;
-                return this;
-            }
-
-            public RegisterToken build() {
-                return new RegisterToken(this.token);
-            }
-
-            public String toString() {
-                return "RegisterRequest.RegisterToken.RegisterTokenBuilder(token=" + this.token + ")";
-            }
         }
     }
 }

@@ -9,6 +9,7 @@ import ai.analys.cvbrk.validation.OnUpdate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -46,8 +47,8 @@ public class PostController {
         return ResponseEntity.ok(postService.findAll(page, size));
     }
 
-    @PostMapping
-    @PreAuthorize("hasRole('RH')") // Restricts access to users with the RH role
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasAuthority('RH')")
     public ResponseEntity<PostResponse> savePost(
             @Validated(OnCreate.class)  @ModelAttribute PostRequest request
     ) throws JsonProcessingException {
@@ -57,8 +58,8 @@ public class PostController {
     }
 
 
-    @PutMapping("/{id}")
-    @PreAuthorize("hasRole('RH')") // Restricts access to users with the RH role
+    @PutMapping(value = "/{id}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasAuthority('RH')")
     public ResponseEntity<PostResponse> updatePost(
             @PathVariable Long id,
             @Validated(OnUpdate.class) @ModelAttribute PostRequest request
@@ -69,7 +70,7 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('RH')") // Restricts access to users with the RH role
+    @PreAuthorize("hasAuthority('RH')")
     public ResponseEntity<Void> deletePost(@PathVariable Long id) {
         postService.delete(id);
         return ResponseEntity.noContent().build();
