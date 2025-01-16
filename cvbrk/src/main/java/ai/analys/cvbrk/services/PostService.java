@@ -2,6 +2,7 @@ package ai.analys.cvbrk.services;
 
 import ai.analys.cvbrk.common.PageResponse;
 import ai.analys.cvbrk.dao.PostRepository;
+import ai.analys.cvbrk.dao.UserRepository;
 import ai.analys.cvbrk.dto.PostRequest;
 import ai.analys.cvbrk.dto.PostResponse;
 import ai.analys.cvbrk.entity.Post;
@@ -31,14 +32,15 @@ public class PostService {
     private final ImgService imgService;
     private final ObjectMapper objectMapper;
     private final UserService userService;
+    private final UserRepository userRepository;
     @Autowired
-    public PostService(PostRepository postRepository,UserService userService, PostMapper postMapper,ObjectMapper objectMapper, ImgService imgService) {
+    public PostService(PostRepository postRepository,UserRepository userRepository,UserService userService, PostMapper postMapper,ObjectMapper objectMapper, ImgService imgService) {
         this.postRepository = postRepository;
         this.postMapper = postMapper;
         this.imgService = imgService;
         this.userService = userService;
         this.objectMapper = objectMapper;
-
+        this.userRepository = userRepository;
     }
     public Post findPostById(Long id) {
         return postRepository.findById(id)
@@ -153,10 +155,52 @@ public class PostService {
                 .toList();
         return createPageResponse(new org.springframework.data.domain.PageImpl<>(filteredPosts,pageable, filteredPosts.size()));
     }
-    public List<PostResponse> findAllMypost() {
-        User use=userService.getCurrentUser();
-        return postRepository.findByRhId(use.getId()).stream()
-                .map(postMapper::toResponse)
+    public PageResponse<PostResponse> searchByKeywordpost(String keyword,Long id,int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        User use=userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Page<Post> posts = postRepository.findByKeywordContainingIgnoreCase(keyword,pageable);
+        List<Post> filteredPosts = posts.getContent().stream()
+                .filter(post -> post.getRh().getId().equals(use.getId()))
                 .toList();
+        return createPageResponse(new org.springframework.data.domain.PageImpl<>(filteredPosts,pageable, filteredPosts.size()));
+    }
+
+    public PageResponse<PostResponse> searchByTitleDescriptionOrKeywordpost(String searchQuery,Long id,int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        User use=userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Page<Post> posts = postRepository.findByTitreContainingIgnoreCaseOrDescriptionContainingIgnoreCaseOrKeywordContainingIgnoreCase(searchQuery,searchQuery,searchQuery,pageable);
+        List<Post> filteredPosts = posts.getContent().stream()
+                .filter(post -> post.getRh().getId().equals(use.getId()))
+                .toList();
+        return createPageResponse(new org.springframework.data.domain.PageImpl<>(filteredPosts,pageable, filteredPosts.size()));
+    }
+
+
+
+    public PageResponse<PostResponse> searchByKeywordcurrentpost(String keyword,int page, int size) {
+        User use=userService.getCurrentUser();
+        return searchByKeywordpost(keyword,use.getId(),page,size);
+    }
+
+    public PageResponse<PostResponse> searchByTitleDescriptionOrKeywordcuurentpost(String searchQuery,int page, int size) {
+        User use=userService.getCurrentUser();
+        return searchByKeywordpost(searchQuery,use.getId(),page,size);
+    }
+
+    public PageResponse<PostResponse> searchByKeyword(String keyword,int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Post> posts = postRepository.findByKeywordContainingIgnoreCase(keyword,pageable);
+        List<Post> filteredPosts = posts.getContent().stream()
+                .toList();
+        return createPageResponse(new org.springframework.data.domain.PageImpl<>(filteredPosts,pageable, filteredPosts.size()));
+    }
+
+    public PageResponse<PostResponse> searchByTitleDescriptionOrKeyword(String searchQuery,int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Post> posts = postRepository.findByTitreContainingIgnoreCaseOrDescriptionContainingIgnoreCaseOrKeywordContainingIgnoreCase(searchQuery,searchQuery,searchQuery,pageable);
+        List<Post> filteredPosts = posts.getContent().stream()
+                .toList();
+        return createPageResponse(new org.springframework.data.domain.PageImpl<>(filteredPosts,pageable, filteredPosts.size()));
     }
 }

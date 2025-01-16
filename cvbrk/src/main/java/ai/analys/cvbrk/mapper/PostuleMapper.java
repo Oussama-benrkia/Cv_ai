@@ -16,29 +16,12 @@ import java.util.List;
 @Component
 public class PostuleMapper implements Mapper<Postule, PostuleResponse, PostuleRequest> {
 
-    private final PostService postService;
-    private final UserService userService;
-
-    @Autowired
-    public PostuleMapper(PostService postService, UserService userService) {
-        this.postService = postService;
-        this.userService = userService;
-    }
 
     @Override
     public Postule toEntity(PostuleRequest data) {
-        Post post = postService.findPostById(data.postId());
-        User user = userService.getCurrentUser();
-        List<Cv> cvs = user.getCvs();
-        if (cvs == null || cvs.isEmpty()) {
-            throw new IllegalStateException("User must have at least one cv to postule");
-        }
-        Cv cv= cvs.get(0);
         return Postule.builder()
-                .post(post)
                 .description(data.description())
                 .pourcentage(data.pourcentage())
-                .etudiant(cv)
                 .build();
     }
 

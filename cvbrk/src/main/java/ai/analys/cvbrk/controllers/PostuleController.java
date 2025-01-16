@@ -3,6 +3,7 @@ package ai.analys.cvbrk.controllers;
 import ai.analys.cvbrk.common.PageResponse;
 import ai.analys.cvbrk.dto.PostuleRequest;
 import ai.analys.cvbrk.dto.PostuleResponse;
+import ai.analys.cvbrk.exception.ResourceNotFoundException;
 import ai.analys.cvbrk.services.PostuleeService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -23,9 +24,15 @@ public class PostuleController {
         this.postuleeService = postuleeService;
     }
 
-    @PostMapping
-    public ResponseEntity<PostuleResponse> addPostule(@RequestBody @Valid PostuleRequest request) {
-        return postuleeService.add(request)
+    @GetMapping("/id/{id}")
+    public ResponseEntity<PostuleResponse> findPostule(@PathVariable Long Id) {
+        return postuleeService.findPostuleByid(Id)
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new ResourceNotFoundException("Postule not found with id: " + Id));
+    }
+    @PostMapping("/{id}")
+    public ResponseEntity<PostuleResponse> addPostule(@RequestBody @Valid PostuleRequest request, @PathVariable Long id) {
+        return postuleeService.add(request,id)
                 .map(response -> ResponseEntity.status(HttpStatus.CREATED).body(response))
                 .orElse(ResponseEntity.badRequest().build());
     }

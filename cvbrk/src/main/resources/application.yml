@@ -6,3 +6,5 @@ spring:
 file:
   upload:
     directory: uploads
+server:
+  port: 8181

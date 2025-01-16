@@ -29,7 +29,6 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-
     public ResponseEntity<PostResponse> findById(@PathVariable Long id) {
         return postService.findById(id)
                 .map(ResponseEntity::ok)
@@ -39,12 +38,22 @@ public class PostController {
     public ResponseEntity<List<PostResponse>> findAllPosts() {
         return ResponseEntity.ok(postService.findAll());
     }
+
     @GetMapping
     public ResponseEntity<PageResponse<PostResponse>> findAll(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
-    ) {
-        return ResponseEntity.ok(postService.findAll(page, size));
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "") String key,
+            @RequestParam(defaultValue = "") String search
+
+            ) {
+        if(!search.isEmpty()){
+            return ResponseEntity.ok(postService.searchByTitleDescriptionOrKeyword(search,page,size));
+        } else if (! key.isEmpty()) {
+            return ResponseEntity.ok(postService.searchByKeyword(key,page,size));
+        }else {
+            return ResponseEntity.ok(postService.findAll(page, size));
+        }
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -79,9 +88,17 @@ public class PostController {
     @GetMapping("/rh/{rhId}")
     public ResponseEntity<PageResponse<PostResponse>> findAllByRhId(@PathVariable Long rhId,
                                                                     @RequestParam(defaultValue = "0") int page,
-                                                                    @RequestParam(defaultValue = "10") int size
+                                                                    @RequestParam(defaultValue = "10") int size,
+                                                                    @RequestParam(defaultValue = "") String key,
+                                                                    @RequestParam(defaultValue = "") String search
     ) {
-        return ResponseEntity.ok(postService.findAllByRhId(page, size,rhId));
+        if(!search.isEmpty()){
+            return ResponseEntity.ok(postService.searchByTitleDescriptionOrKeywordpost(search,rhId,page,size));
+        } else if (! key.isEmpty()) {
+            return ResponseEntity.ok(postService.searchByKeywordpost(key,rhId,page,size));
+        }else {
+            return ResponseEntity.ok(postService.findAllByRhId(page, size,rhId));
+        }
     }
     @GetMapping("/rh/list/{rhId}")
     public ResponseEntity<List<PostResponse>> findAllByRhId(@PathVariable Long rhId) {
@@ -91,13 +108,17 @@ public class PostController {
     @PreAuthorize("hasRole('RH')") // Restricts access to users with the RH role
     public ResponseEntity<PageResponse<PostResponse>> findmypost(
                                                                     @RequestParam(defaultValue = "0") int page,
-                                                                    @RequestParam(defaultValue = "10") int size
+                                                                    @RequestParam(defaultValue = "10") int size,
+                                                                    @RequestParam(defaultValue = "") String key,
+                                                                    @RequestParam(defaultValue = "") String search
     ) {
-        return ResponseEntity.ok(postService.findAllMypost(page, size));
+        if(!search.isEmpty()){
+            return ResponseEntity.ok(postService.searchByTitleDescriptionOrKeywordcuurentpost(search,page,size));
+        } else if (! key.isEmpty()) {
+            return ResponseEntity.ok(postService.searchByKeywordcurrentpost(key,page,size));
+        }else {
+            return ResponseEntity.ok(postService.findAllMypost(page, size));
+        }
     }
-    @GetMapping("/my/{rhId}")
-    @PreAuthorize("hasRole('RH')") // Restricts access to users with the RH role
-    public ResponseEntity<List<PostResponse>> findmypost(@PathVariable Long rhId) {
-        return ResponseEntity.ok(postService.findAllMypost());
-    }
+
 }

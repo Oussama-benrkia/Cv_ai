@@ -1,6 +1,7 @@
 package ai.analys.cvbrk.services;
 
 import ai.analys.cvbrk.common.PageResponse;
+import ai.analys.cvbrk.dao.CvRepository;
 import ai.analys.cvbrk.dao.PostuleRepository;
 import ai.analys.cvbrk.dto.PostuleRequest;
 import ai.analys.cvbrk.dto.PostuleResponse;
@@ -26,13 +27,15 @@ public class PostuleeService {
     private final UserService userService;
     private final PostuleMapper postuleMapper;
     private final PostService postService;
+    private final CvRepository cvRepository;
 
 
-    public PostuleeService(PostuleRepository postuleRepository, UserService userService, PostuleMapper postuleMapper, PostService postService) {
+    public PostuleeService(PostuleRepository postuleRepository, UserService userService, PostuleMapper postuleMapper, PostService postService, CvRepository cvRepository) {
         this.postuleRepository = postuleRepository;
         this.userService = userService;
         this.postuleMapper = postuleMapper;
         this.postService = postService;
+        this.cvRepository = cvRepository;
     }
 
 
@@ -55,15 +58,12 @@ public class PostuleeService {
                 .totalPages(page.getTotalPages())
                 .build();
     }
-
-    public Optional<PostuleResponse> add(PostuleRequest request) {
-        Post post = postService.findPostById(request.postId());
-        User user = userService.getCurrentUser();
-        List<Cv> cvs = user.getCvs();
-        if (cvs == null || cvs.isEmpty()) {
-            throw new IllegalStateException("User must have at least one cv to postule");
-        }
-        Cv cv = cvs.get(0);
+    public Optional<PostuleResponse> findPostuleByid(Long id) {
+        return Optional.ofNullable(postuleMapper.toResponse(this.findPostuleById(id)));
+    }
+    public Optional<PostuleResponse> add(PostuleRequest request ,Long postid) {
+        Post post = postService.findPostById(postid);
+        Cv cv =cvRepository.findById(request.idcv()).orElseThrow(() -> new EntityNotFoundException("CV with ID " + request.idcv() + " not found"));
         Postule postule = Postule.builder()
                 .etudiant(cv)
                 .post(post)
