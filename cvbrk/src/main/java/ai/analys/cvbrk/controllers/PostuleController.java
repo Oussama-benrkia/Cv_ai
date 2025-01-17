@@ -85,5 +85,10 @@ public class PostuleController {
     public ResponseEntity<List<PostuleResponse>> findAllMyPostule() {
         return ResponseEntity.ok(postuleeService.findAllMypostule());
     }
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> checkPostule(@RequestParam Long postId,
+                                                @RequestParam Long etudiantId) {
+        return ResponseEntity.ok(postuleeService.checkPostule(postId,etudiantId));
+    }
 
 }

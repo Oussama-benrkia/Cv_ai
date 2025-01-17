@@ -64,6 +64,9 @@ public class PostuleeService {
     public Optional<PostuleResponse> add(PostuleRequest request ,Long postid) {
         Post post = postService.findPostById(postid);
         Cv cv =cvRepository.findById(request.idcv()).orElseThrow(() -> new EntityNotFoundException("CV with ID " + request.idcv() + " not found"));
+        if(checkPostule(postid, cv.getId())){
+            throw new IllegalStateException("This student has already postuled to this job");
+        }
         Postule postule = Postule.builder()
                 .etudiant(cv)
                 .post(post)
@@ -132,5 +135,14 @@ public class PostuleeService {
         return postuleRepository.findByEtudiantId(use.getId()).stream()
                 .map(postuleMapper::toResponse)
                 .toList();
+    }
+    public boolean checkPostule(Long postId, Long etudiantId) {
+        List<Postule> postules = postuleRepository.findByPostId(postId);
+        if (postules == null || postules.isEmpty()) {
+            return false;
+        }
+        return postules.stream()
+                .anyMatch(postule -> postule.getEtudiant().getId().equals(etudiantId));
+
     }
 }
