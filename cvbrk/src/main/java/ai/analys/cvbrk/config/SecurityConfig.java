@@ -49,7 +49,7 @@ public class SecurityConfig {
                 }))
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/auth/register", "/auth/login", "/auth/refresh").permitAll()  // Allow public access to these endpoints
-                        .requestMatchers(HttpMethod.GET, "/api/image/**", "/api/posts/**", "/api/file/**","/api/postules/id/**").permitAll()  // Public GET requests
+                        .requestMatchers(HttpMethod.GET, "/api/image/**", "/api/posts/**","/api/cvs/**", "/api/file/**","/api/postules/id/**").permitAll()  // Public GET requests
 
                         .requestMatchers("/v3/api-docs/**",
                                 "/swagger-ui/**",

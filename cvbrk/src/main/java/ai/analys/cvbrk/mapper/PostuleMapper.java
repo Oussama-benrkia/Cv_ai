@@ -20,8 +20,7 @@ public class PostuleMapper implements Mapper<Postule, PostuleResponse, PostuleRe
     @Override
     public Postule toEntity(PostuleRequest data) {
         return Postule.builder()
-                .description(data.description())
-                .pourcentage(data.pourcentage())
+                .message(data.mesaage())
                 .build();
     }
 

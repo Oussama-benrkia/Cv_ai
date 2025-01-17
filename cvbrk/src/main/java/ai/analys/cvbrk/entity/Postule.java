@@ -13,6 +13,7 @@ public class Postule {
 
     private double pourcentage;
     private String description;
+    private String message;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
@@ -26,10 +27,11 @@ public class Postule {
     @JoinColumn(name = "etudiant_id", nullable = false)
     private Cv etudiant;
 
-    public Postule(Long id, double pourcentage, String description, LocalDateTime creatAt, Post post, Cv etudiant) {
+    public Postule(Long id, double pourcentage, String description, String message, LocalDateTime creatAt, Post post, Cv etudiant) {
         this.id = id;
         this.pourcentage = pourcentage;
         this.description = description;
+        this.message = message;
         this.creatAt = creatAt;
         this.post = post;
         this.etudiant = etudiant;
@@ -54,6 +56,10 @@ public class Postule {
         return this.description;
     }
 
+    public String getMessage() {
+        return this.message;
+    }
+
     public LocalDateTime getCreatAt() {
         return this.creatAt;
     }
@@ -76,6 +82,10 @@ public class Postule {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public void setCreatAt(LocalDateTime creatAt) {
@@ -103,6 +113,9 @@ public class Postule {
         final Object other$description = other.getDescription();
         if (this$description == null ? other$description != null : !this$description.equals(other$description))
             return false;
+        final Object this$message = this.getMessage();
+        final Object other$message = other.getMessage();
+        if (this$message == null ? other$message != null : !this$message.equals(other$message)) return false;
         final Object this$creatAt = this.getCreatAt();
         final Object other$creatAt = other.getCreatAt();
         if (this$creatAt == null ? other$creatAt != null : !this$creatAt.equals(other$creatAt)) return false;
@@ -128,6 +141,8 @@ public class Postule {
         result = result * PRIME + (int) ($pourcentage >>> 32 ^ $pourcentage);
         final Object $description = this.getDescription();
         result = result * PRIME + ($description == null ? 43 : $description.hashCode());
+        final Object $message = this.getMessage();
+        result = result * PRIME + ($message == null ? 43 : $message.hashCode());
         final Object $creatAt = this.getCreatAt();
         result = result * PRIME + ($creatAt == null ? 43 : $creatAt.hashCode());
         final Object $post = this.getPost();
@@ -138,13 +153,14 @@ public class Postule {
     }
 
     public String toString() {
-        return "Postule(id=" + this.getId() + ", pourcentage=" + this.getPourcentage() + ", description=" + this.getDescription() + ", creatAt=" + this.getCreatAt() + ", post=" + this.getPost() + ", etudiant=" + this.getEtudiant() + ")";
+        return "Postule(id=" + this.getId() + ", pourcentage=" + this.getPourcentage() + ", description=" + this.getDescription() + ", message=" + this.getMessage() + ", creatAt=" + this.getCreatAt() + ", post=" + this.getPost() + ", etudiant=" + this.getEtudiant() + ")";
     }
 
     public static class PostuleBuilder {
         private Long id;
         private double pourcentage;
         private String description;
+        private String message;
         private LocalDateTime creatAt;
         private Post post;
         private Cv etudiant;
@@ -167,6 +183,11 @@ public class Postule {
             return this;
         }
 
+        public PostuleBuilder message(String message) {
+            this.message = message;
+            return this;
+        }
+
         public PostuleBuilder creatAt(LocalDateTime creatAt) {
             this.creatAt = creatAt;
             return this;
@@ -183,11 +204,11 @@ public class Postule {
         }
 
         public Postule build() {
-            return new Postule(this.id, this.pourcentage, this.description, this.creatAt, this.post, this.etudiant);
+            return new Postule(this.id, this.pourcentage, this.description, this.message, this.creatAt, this.post, this.etudiant);
         }
 
         public String toString() {
-            return "Postule.PostuleBuilder(id=" + this.id + ", pourcentage=" + this.pourcentage + ", description=" + this.description + ", creatAt=" + this.creatAt + ", post=" + this.post + ", etudiant=" + this.etudiant + ")";
+            return "Postule.PostuleBuilder(id=" + this.id + ", pourcentage=" + this.pourcentage + ", description=" + this.description + ", message=" + this.message + ", creatAt=" + this.creatAt + ", post=" + this.post + ", etudiant=" + this.etudiant + ")";
         }
     }
 }

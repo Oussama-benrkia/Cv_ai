@@ -49,7 +49,7 @@ public class PostMapper implements Mapper<Post, PostResponse, PostRequest> {
         String serverAddress = environment.getProperty("server.address", "localhost");
         String serverPort = environment.getProperty("server.port", "8080");
 
-        String imageUrl = (!entity.getImage().isEmpty())
+        String imageUrl = (entity.getImage()!=null&&!entity.getImage().isEmpty())
                 ? String.format("http://%s:%s/api/image/%s", serverAddress, serverPort, entity.getImage())
                 : null;
 

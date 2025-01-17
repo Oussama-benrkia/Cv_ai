@@ -25,10 +25,10 @@ public class PostuleController {
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<PostuleResponse> findPostule(@PathVariable Long Id) {
-        return postuleeService.findPostuleByid(Id)
+    public ResponseEntity<PostuleResponse> findPostule(@PathVariable Long id) {
+        return postuleeService.findPostuleByid(id)
                 .map(ResponseEntity::ok)
-                .orElseThrow(() -> new ResourceNotFoundException("Postule not found with id: " + Id));
+                .orElseThrow(() -> new ResourceNotFoundException("Postule not found with id: " + id ));
     }
     @PostMapping("/{id}")
     public ResponseEntity<PostuleResponse> addPostule(@RequestBody @Valid PostuleRequest request, @PathVariable Long id) {

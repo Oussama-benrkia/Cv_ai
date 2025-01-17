@@ -7,4 +7,4 @@ file:
   upload:
     directory: uploads
 server:
-  port: 8181
+  port: 8080

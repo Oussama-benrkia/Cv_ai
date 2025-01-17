@@ -70,8 +70,7 @@ public class PostuleeService {
         Postule postule = Postule.builder()
                 .etudiant(cv)
                 .post(post)
-                .description(request.description())
-                .pourcentage(request.pourcentage())
+                .message(request.mesaage())
                 .build();
         Postule savedPostule = postuleRepository.save(postule);
         return Optional.ofNullable(postuleMapper.toResponse(savedPostule));

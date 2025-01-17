@@ -6,14 +6,16 @@ public class PostuleResponse {
     private Long id;
     private Long postId;
     private String description;
+    private String message;
     private double pourcentage;
     private LocalDateTime creatAt;
     private Long etudiantId;
 
-    public PostuleResponse(Long id, Long postId, String description, double pourcentage, LocalDateTime creatAt, Long etudiantId) {
+    public PostuleResponse(Long id, Long postId, String description, String message, double pourcentage, LocalDateTime creatAt, Long etudiantId) {
         this.id = id;
         this.postId = postId;
         this.description = description;
+        this.message = message;
         this.pourcentage = pourcentage;
         this.creatAt = creatAt;
         this.etudiantId = etudiantId;
@@ -38,6 +40,10 @@ public class PostuleResponse {
         return this.description;
     }
 
+    public String getMessage() {
+        return this.message;
+    }
+
     public double getPourcentage() {
         return this.pourcentage;
     }
@@ -60,6 +66,10 @@ public class PostuleResponse {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public void setPourcentage(double pourcentage) {
@@ -89,6 +99,9 @@ public class PostuleResponse {
         final Object other$description = other.getDescription();
         if (this$description == null ? other$description != null : !this$description.equals(other$description))
             return false;
+        final Object this$message = this.getMessage();
+        final Object other$message = other.getMessage();
+        if (this$message == null ? other$message != null : !this$message.equals(other$message)) return false;
         if (Double.compare(this.getPourcentage(), other.getPourcentage()) != 0) return false;
         final Object this$creatAt = this.getCreatAt();
         final Object other$creatAt = other.getCreatAt();
@@ -113,6 +126,8 @@ public class PostuleResponse {
         result = result * PRIME + ($postId == null ? 43 : $postId.hashCode());
         final Object $description = this.getDescription();
         result = result * PRIME + ($description == null ? 43 : $description.hashCode());
+        final Object $message = this.getMessage();
+        result = result * PRIME + ($message == null ? 43 : $message.hashCode());
         final long $pourcentage = Double.doubleToLongBits(this.getPourcentage());
         result = result * PRIME + (int) ($pourcentage >>> 32 ^ $pourcentage);
         final Object $creatAt = this.getCreatAt();
@@ -123,13 +138,14 @@ public class PostuleResponse {
     }
 
     public String toString() {
-        return "PostuleResponse(id=" + this.getId() + ", postId=" + this.getPostId() + ", description=" + this.getDescription() + ", pourcentage=" + this.getPourcentage() + ", creatAt=" + this.getCreatAt() + ", etudiantId=" + this.getEtudiantId() + ")";
+        return "PostuleResponse(id=" + this.getId() + ", postId=" + this.getPostId() + ", description=" + this.getDescription() + ", message=" + this.getMessage() + ", pourcentage=" + this.getPourcentage() + ", creatAt=" + this.getCreatAt() + ", etudiantId=" + this.getEtudiantId() + ")";
     }
 
     public static class PostuleResponseBuilder {
         private Long id;
         private Long postId;
         private String description;
+        private String message;
         private double pourcentage;
         private LocalDateTime creatAt;
         private Long etudiantId;
@@ -152,6 +168,11 @@ public class PostuleResponse {
             return this;
         }
 
+        public PostuleResponseBuilder message(String message) {
+            this.message = message;
+            return this;
+        }
+
         public PostuleResponseBuilder pourcentage(double pourcentage) {
             this.pourcentage = pourcentage;
             return this;
@@ -168,11 +189,11 @@ public class PostuleResponse {
         }
 
         public PostuleResponse build() {
-            return new PostuleResponse(this.id, this.postId, this.description, this.pourcentage, this.creatAt, this.etudiantId);
+            return new PostuleResponse(this.id, this.postId, this.description, this.message, this.pourcentage, this.creatAt, this.etudiantId);
         }
 
         public String toString() {
-            return "PostuleResponse.PostuleResponseBuilder(id=" + this.id + ", postId=" + this.postId + ", description=" + this.description + ", pourcentage=" + this.pourcentage + ", creatAt=" + this.creatAt + ", etudiantId=" + this.etudiantId + ")";
+            return "PostuleResponse.PostuleResponseBuilder(id=" + this.id + ", postId=" + this.postId + ", description=" + this.description + ", message=" + this.message + ", pourcentage=" + this.pourcentage + ", creatAt=" + this.creatAt + ", etudiantId=" + this.etudiantId + ")";
         }
     }
 }
