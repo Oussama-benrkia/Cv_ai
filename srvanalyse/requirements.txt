@@ -1,3 +1,0 @@
-mimetypes
-docx2txt
-PyMuPDF

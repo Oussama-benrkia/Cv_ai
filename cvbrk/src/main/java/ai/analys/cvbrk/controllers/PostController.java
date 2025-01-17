@@ -27,7 +27,6 @@ public class PostController {
     public PostController(PostService postService) {
         this.postService = postService;
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<PostResponse> findById(@PathVariable Long id) {
         return postService.findById(id)
@@ -38,7 +37,6 @@ public class PostController {
     public ResponseEntity<List<PostResponse>> findAllPosts() {
         return ResponseEntity.ok(postService.findAll());
     }
-
     @GetMapping
     public ResponseEntity<PageResponse<PostResponse>> findAll(
             @RequestParam(defaultValue = "0") int page,
@@ -104,6 +102,7 @@ public class PostController {
     public ResponseEntity<List<PostResponse>> findAllByRhId(@PathVariable Long rhId) {
         return ResponseEntity.ok(postService.findAllByRhId(rhId));
     }
+
     @GetMapping("/my")
     @PreAuthorize("hasRole('RH')") // Restricts access to users with the RH role
     public ResponseEntity<PageResponse<PostResponse>> findmypost(

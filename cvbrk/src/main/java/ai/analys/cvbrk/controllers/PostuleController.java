@@ -36,31 +36,16 @@ public class PostuleController {
                 .map(response -> ResponseEntity.status(HttpStatus.CREATED).body(response))
                 .orElse(ResponseEntity.badRequest().build());
     }
-
-
     @DeleteMapping("/{id}")
     public void deletePostule(@PathVariable Long id) {
         postuleeService.deletePostule(id);
     }
-
     @GetMapping
     public ResponseEntity<PageResponse<PostuleResponse>> findAllPostule(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size)
     {
         return ResponseEntity.ok(postuleeService.findAllPostule(page,size));
-    }
-    @GetMapping("/etudiant/{etudiantId}")
-    public ResponseEntity<PageResponse<PostuleResponse>> findAllByEtudiantId(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @PathVariable Long etudiantId)
-    {
-        return ResponseEntity.ok(postuleeService.findAllByEtudiantId(page,size,etudiantId));
-    }
-    @GetMapping("/etudiantList/{etudiantId}")
-    public ResponseEntity<List<PostuleResponse>> findAllByEtudiantId(@PathVariable Long etudiantId) {
-        return ResponseEntity.ok(postuleeService.findAllByEtudiantId(etudiantId));
     }
     @GetMapping("/post/{postId}")
     public ResponseEntity<PageResponse<PostuleResponse>> findAllByPostId(
@@ -74,6 +59,25 @@ public class PostuleController {
     public ResponseEntity<List<PostuleResponse>> findAllByPostId(@PathVariable Long postId) {
         return ResponseEntity.ok(postuleeService.findAllByPostId(postId));
     }
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> checkPostule(@RequestParam Long postId,
+                                                @RequestParam Long etudiantId) {
+        return ResponseEntity.ok(postuleeService.checkPostule(postId,etudiantId));
+    }
+
+/*---------------------------------------------------*/
+    @GetMapping("/etudiant/{etudiantId}")
+    public ResponseEntity<PageResponse<PostuleResponse>> findAllByEtudiantId(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @PathVariable Long etudiantId)
+    {
+        return ResponseEntity.ok(postuleeService.findAllByEtudiantId(page,size,etudiantId));
+    }
+    @GetMapping("/etudiantList/{etudiantId}")
+    public ResponseEntity<List<PostuleResponse>> findAllByEtudiantId(@PathVariable Long etudiantId) {
+        return ResponseEntity.ok(postuleeService.findAllByEtudiantId(etudiantId));
+    }
     @GetMapping("/me")
     public ResponseEntity<PageResponse<PostuleResponse>> findAllMyPostule(
             @RequestParam(defaultValue = "0") int page,
@@ -85,10 +89,8 @@ public class PostuleController {
     public ResponseEntity<List<PostuleResponse>> findAllMyPostule() {
         return ResponseEntity.ok(postuleeService.findAllMypostule());
     }
-    @GetMapping("/check")
-    public ResponseEntity<Boolean> checkPostule(@RequestParam Long postId,
-                                                @RequestParam Long etudiantId) {
-        return ResponseEntity.ok(postuleeService.checkPostule(postId,etudiantId));
-    }
+
+
+
 
 }

@@ -1,10 +1,6 @@
 package ai.analys.cvbrk.controllers;
 
-import ai.analys.cvbrk.dao.CvRepository;
-import ai.analys.cvbrk.dao.PostRepository;
-import ai.analys.cvbrk.dao.UserRepository;
 import ai.analys.cvbrk.dto.DashboardDto;
-import ai.analys.cvbrk.entity.Role;
 import ai.analys.cvbrk.services.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

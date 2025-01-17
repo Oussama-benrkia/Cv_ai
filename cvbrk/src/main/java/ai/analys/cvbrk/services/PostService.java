@@ -2,6 +2,7 @@ package ai.analys.cvbrk.services;
 
 import ai.analys.cvbrk.common.PageResponse;
 import ai.analys.cvbrk.dao.PostRepository;
+import ai.analys.cvbrk.dao.PostuleRepository;
 import ai.analys.cvbrk.dao.UserRepository;
 import ai.analys.cvbrk.dto.PostRequest;
 import ai.analys.cvbrk.dto.PostResponse;
@@ -33,14 +34,16 @@ public class PostService {
     private final ObjectMapper objectMapper;
     private final UserService userService;
     private final UserRepository userRepository;
+    private final PostuleRepository postuleRepository;
     @Autowired
-    public PostService(PostRepository postRepository,UserRepository userRepository,UserService userService, PostMapper postMapper,ObjectMapper objectMapper, ImgService imgService) {
+    public PostService(PostRepository postRepository, UserRepository userRepository, UserService userService, PostMapper postMapper, ObjectMapper objectMapper, ImgService imgService, PostuleRepository postuleRepository) {
         this.postRepository = postRepository;
         this.postMapper = postMapper;
         this.imgService = imgService;
         this.userService = userService;
         this.objectMapper = objectMapper;
         this.userRepository = userRepository;
+        this.postuleRepository = postuleRepository;
     }
     public Post findPostById(Long id) {
         return postRepository.findById(id)
@@ -73,7 +76,7 @@ public class PostService {
                 .map(postMapper::toResponse)
                 .toList();
     }
-    public Optional<PostResponse> save(PostRequest request) throws JsonProcessingException {
+    public Optional<PostResponse> save(PostRequest request)  {
         Post post = postMapper.toEntity(request);
         if (post.getDescription() !=null && post.getDescription().length() > 5000){
             throw new OperationNotPermittedException("Max description length is 5000");
@@ -127,12 +130,16 @@ public class PostService {
     }
     public Optional<PostResponse> delete(Long id) {
         Post post = findPostById(id);
+        if(!post.getPostulants().isEmpty()){
+            postuleRepository.deleteAll(post.getPostulants());
+        }
         if(post.getImage() != null && !post.getImage().isEmpty()) {
             imgService.deleteImage(post.getImage());
         }
         postRepository.delete(post);
         return Optional.ofNullable(postMapper.toResponse(post));
     }
+
     public PageResponse<PostResponse> findAllByRhId(int page, int size, Long rhId) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Post> posts = postRepository.findAll(pageable);
