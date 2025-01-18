@@ -1,10 +1,15 @@
 package ai.analys.cvbrk.controllers;
 
+import ai.analys.cvbrk.analyse.ServiceCallanalyse;
 import ai.analys.cvbrk.common.PageResponse;
+import ai.analys.cvbrk.dao.PostuleRepository;
 import ai.analys.cvbrk.dto.PostuleRequest;
 import ai.analys.cvbrk.dto.PostuleResponse;
+import ai.analys.cvbrk.entity.Postule;
 import ai.analys.cvbrk.exception.ResourceNotFoundException;
 import ai.analys.cvbrk.services.PostuleeService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +23,16 @@ import java.util.Optional;
 public class PostuleController {
 
     private final PostuleeService postuleeService;
+    private final ObjectMapper objectMapper;
+    private final PostuleRepository postuleRepository;
 
+    private final ServiceCallanalyse postuleeProducer;
 
-    public PostuleController(PostuleeService postuleeService) {
+    public PostuleController(PostuleeService postuleeService, ObjectMapper objectMapper, PostuleRepository postuleRepository, ServiceCallanalyse postuleeProducer) {
         this.postuleeService = postuleeService;
+        this.objectMapper = objectMapper;
+        this.postuleRepository = postuleRepository;
+        this.postuleeProducer = postuleeProducer;
     }
 
     @GetMapping("/id/{id}")
@@ -31,10 +42,19 @@ public class PostuleController {
                 .orElseThrow(() -> new ResourceNotFoundException("Postule not found with id: " + id ));
     }
     @PostMapping("/{id}")
-    public ResponseEntity<PostuleResponse> addPostule(@RequestBody @Valid PostuleRequest request, @PathVariable Long id) {
-        return postuleeService.add(request,id)
-                .map(response -> ResponseEntity.status(HttpStatus.CREATED).body(response))
-                .orElse(ResponseEntity.badRequest().build());
+    public ResponseEntity<PostuleResponse> addPostule(@RequestBody @Valid PostuleRequest request, @PathVariable Long id) throws JsonProcessingException {
+        PostuleResponse postuleResponse=postuleeService.add(request,id).orElseThrow();
+        postuleeProducer.fetchData(Integer.parseInt(String.valueOf(postuleResponse.getId()))).doOnNext(dataResponse -> {
+            try {
+                Postule savedPostule= postuleRepository.findById(postuleResponse.getId()).orElseThrow(()->{throw new ResourceNotFoundException("Postule not found with id: " + postuleResponse.getId());});
+                savedPostule.setDescription(objectMapper.writeValueAsString(dataResponse.getData()));
+                postuleRepository.save(savedPostule);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException("Error serializing data response", e);
+            }
+        }).block();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(postuleResponse);
     }
     @DeleteMapping("/{id}")
     public void deletePostule(@PathVariable Long id) {

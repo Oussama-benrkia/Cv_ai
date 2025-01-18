@@ -8,10 +8,10 @@ public class PostuleResponse {
     private String description;
     private String message;
     private double pourcentage;
-    private LocalDateTime creatAt;
+    private String creatAt;
     private Long etudiantId;
 
-    public PostuleResponse(Long id, Long postId, String description, String message, double pourcentage, LocalDateTime creatAt, Long etudiantId) {
+    public PostuleResponse(Long id, Long postId, String description, String message, double pourcentage, String creatAt, Long etudiantId) {
         this.id = id;
         this.postId = postId;
         this.description = description;
@@ -48,7 +48,7 @@ public class PostuleResponse {
         return this.pourcentage;
     }
 
-    public LocalDateTime getCreatAt() {
+    public String getCreatAt() {
         return this.creatAt;
     }
 
@@ -76,7 +76,7 @@ public class PostuleResponse {
         this.pourcentage = pourcentage;
     }
 
-    public void setCreatAt(LocalDateTime creatAt) {
+    public void setCreatAt(String creatAt) {
         this.creatAt = creatAt;
     }
 
@@ -147,7 +147,7 @@ public class PostuleResponse {
         private String description;
         private String message;
         private double pourcentage;
-        private LocalDateTime creatAt;
+        private String creatAt;
         private Long etudiantId;
 
         PostuleResponseBuilder() {
@@ -178,7 +178,7 @@ public class PostuleResponse {
             return this;
         }
 
-        public PostuleResponseBuilder creatAt(LocalDateTime creatAt) {
+        public PostuleResponseBuilder creatAt(String creatAt) {
             this.creatAt = creatAt;
             return this;
         }
