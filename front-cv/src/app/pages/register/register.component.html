@@ -1,0 +1,52 @@
+<div class="register-container">
+  <div class="register-card">
+    <div class="ai-icon">
+      <img src="assets/ai-logo.png" alt="AI Logo" />
+    </div>
+<!-- <h2 class="register-title">Sign Up</h2> -->
+<h2 class="register-title">Recruitment AI</h2>
+    <p class="register-subtitle"> </p>
+    <p class="register-subtitle">Create your account to get started</p>
+    <form (ngSubmit)="onRegister()" class="register-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          name="confirmPassword"
+          placeholder="Confirm your password"
+          required
+        />
+      </div>
+      <button type="submit" class="btn-register">Register</button>
+    </form>
+    <div class="register-footer">
+      <p>
+        Already have an account? <a routerLink="/login" class="login-link">Login</a>
+      </p>
+    </div>
+  </div>
+</div>

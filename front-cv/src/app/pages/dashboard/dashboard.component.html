@@ -1,0 +1,10 @@
+<div *ngIf="isAdmin(); else userDashboard">
+    <h1>Admin Dashboard</h1>
+    <!-- Contenu spécifique à l'admin -->
+  </div>
+  
+  <ng-template #userDashboard>
+    <h1>User Dashboard</h1>
+    <!-- Contenu spécifique à l'utilisateur -->
+  </ng-template>
+  
