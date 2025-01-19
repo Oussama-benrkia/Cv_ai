@@ -1,0 +1,93 @@
+<div class="dashboard-container">
+    <!-- Header -->
+    <header class="dashboard-header">
+      <div class="header-left">
+        <h1>Welcome, {{ rhData.email }}</h1>
+      </div>
+      <div class="header-right">
+        <button class="btn profile-btn" (click)="toggleModal()">Profile</button>
+        <button class="btn logout-btn" (click)="logout()">Logout</button>
+      </div>
+    </header>
+  
+    <!-- Main Content -->
+    <section class="dashboard-content">
+      <!-- Statistics Section -->
+      <div class="stats-section">
+        <div class="stat-card">
+          <i class="fas fa-briefcase"></i>
+          <h3>{{ posts.length }}</h3>
+          <p>Job Posts</p>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-envelope"></i>
+          <h3>{{ applications.length }}</h3>
+          <p>Applications</p>
+        </div>
+      </div>
+  
+      <!-- Job Posts Section -->
+      <div class="posts-section">
+        <div class="posts-header">
+          <h2>Your Job Posts</h2>
+          <button class="btn add-post-btn" (click)="toggleAddPostModal()">Add Job</button>
+        </div>
+        <div class="posts-list">
+          <div *ngFor="let post of posts" class="post-card">
+            <div class="post-details">
+              <h3>{{ post.title }}</h3>
+              <p><strong>Description:</strong> {{ post.description }}</p>
+              <p><strong>Applications:</strong> {{ post.applicationsCount }}</p>
+            </div>
+            <div class="post-actions">
+              <button class="btn view-btn" (click)="viewApplications(post.id)">View Applications</button>
+              <button class="btn delete-btn" (click)="deletePost(post.id)">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Applications Section -->
+      <div *ngIf="applications.length > 0" class="applications-section">
+        <h2>Applications</h2>
+        <div class="applications-list">
+          <div *ngFor="let app of applications" class="application-card">
+            <p><strong>Candidate:</strong> {{ app.candidateName }}</p>
+            <p><strong>Email:</strong> {{ app.candidateEmail }}</p>
+            <button class="btn analyze-btn" (click)="analyzeCV(app.cvId)">Analyze CV</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Profile Modal -->
+    <div class="modal" *ngIf="showModal">
+      <div class="modal-content">
+        <h2>Your Profile</h2>
+        <p><strong>Email:</strong> {{ rhData.email }}</p>
+        <p><strong>Role:</strong> Recruitment Manager</p>
+        <button class="btn close-btn" (click)="toggleModal()">Close</button>
+      </div>
+    </div>
+  
+    <!-- Add Post Modal -->
+    <div class="modal" *ngIf="showAddPostModal">
+      <div class="modal-content">
+        <h2>Add New Job</h2>
+        <form (ngSubmit)="addPost()">
+          <label for="title">Title</label>
+          <input id="title" [(ngModel)]="newPost.title" name="title" required />
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            [(ngModel)]="newPost.description"
+            name="description"
+            required
+          ></textarea>
+          <button type="submit" class="btn">Post Job</button>
+        </form>
+        <button class="btn close-btn" (click)="toggleAddPostModal()">Close</button>
+      </div>
+    </div>
+  </div>
+  

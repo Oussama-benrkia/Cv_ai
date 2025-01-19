@@ -1,0 +1,58 @@
+<div class="dashboard-container">
+    <h2>Bienvenue, {{ userData.name }}</h2>
+  
+    <!-- Section utilisateur -->
+    <div *ngIf="role === 'user'">
+      <h3>Offres disponibles</h3>
+      <ul>
+        <li *ngFor="let offer of offers">
+          <h4>{{ offer.title }}</h4>
+          <p>{{ offer.description }}</p>
+          <button (click)="applyToOffer(offer.id)">Postuler</button>
+        </li>
+      </ul>
+      <h3>Mes candidatures</h3>
+      <ul>
+        <li *ngFor="let application of applications">
+          <h4>{{ application.offerTitle }}</h4>
+          <p>Status: {{ application.status }}</p>
+        </li>
+      </ul>
+    </div>
+  
+    <!-- Section RH -->
+    <div *ngIf="role === 'rh'">
+      <h3>Vos annonces</h3>
+      <ul>
+        <li *ngFor="let post of posts">
+          <h4>{{ post.title }}</h4>
+          <p>{{ post.description }}</p>
+          <button (click)="deletePost(post.id)">Supprimer</button>
+        </li>
+      </ul>
+      <h3>Candidatures reçues</h3>
+      <ul>
+        <li *ngFor="let application of applications">
+          <h4>{{ application.candidateName }}</h4>
+          <p>Offre: {{ application.offerTitle }}</p>
+        </li>
+      </ul>
+    </div>
+  
+    <!-- Section administrateur -->
+    <div *ngIf="role === 'admin'">
+      <h3>Gestion des utilisateurs</h3>
+      <ul>
+        <li *ngFor="let user of users">
+          <h4>{{ user.name }}</h4>
+          <p>Email: {{ user.email }}</p>
+          <button (click)="toggleUserStatus(user.id, user.active)">
+            {{ user.active ? 'Désactiver' : 'Activer' }}
+          </button>
+        </li>
+      </ul>
+      <h3>Statistiques</h3>
+      <p>{{ stats | json }}</p>
+    </div>
+  </div>
+  

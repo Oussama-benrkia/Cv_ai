@@ -1,0 +1,128 @@
+<div class="dashboard-container">
+    <!-- Header -->
+    <header class="dashboard-header">
+      <h1>Welcome, {{ adminData.email }}</h1>
+      <div class="header-actions">
+        <button class="btn" (click)="toggleModal()">My Account</button>
+        <button class="btn logout-btn" (click)="logout()">Logout</button>
+      </div>
+    </header>
+  
+    <!-- Main Content -->
+    <section class="dashboard-content">
+      <!-- Statistics Section -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="card-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="card-details">
+            <h3>Total Users</h3>
+            <p>{{ stats.totalUsers || 0 }}</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="card-icon">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <div class="card-details">
+            <h3>Active Posts</h3>
+            <p>{{ stats.activePosts || 0 }}</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="card-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="card-details">
+            <h3>Applications Received</h3>
+            <p>{{ stats.applicationsReceived || 0 }}</p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- User Management Section -->
+      <div class="user-management">
+        <h2>Manage Users</h2>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users">
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
+                <td>
+                  <span
+                    class="status"
+                    [class.active]="user.isActive"
+                    [class.inactive]="!user.isActive"
+                  >
+                    {{ user.isActive ? 'Active' : 'Inactive' }}
+                  </span>
+                </td>
+                <td>
+                  <button
+                    class="btn action-btn"
+                    (click)="toggleUserStatus(user.id, user.isActive)"
+                  >
+                    {{ user.isActive ? 'Deactivate' : 'Activate' }}
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+      <!-- Job Posts Section -->
+      <div class="posts-section">
+        <h2>All Job Posts</h2>
+        <div class="search-bar">
+          <input
+            type="text"
+            placeholder="Search posts..."
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="searchPosts()"
+          />
+          <button class="btn search-btn">Search</button>
+        </div>
+        <div class="posts-grid">
+          <div *ngFor="let post of filteredPosts" class="post-card">
+            <div class="post-header">
+              <h3>{{ post.title }}</h3>
+              <p><strong>{{ post.company }}</strong></p>
+            </div>
+            <div class="post-tags">
+              <span *ngFor="let tag of post.tags" class="tag">{{ tag }}</span>
+            </div>
+            <div class="post-location">
+              <i class="fas fa-map-marker-alt"></i> {{ post.location }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Admin Profile Modal -->
+    <div class="modal" *ngIf="showModal">
+      <div class="modal-content">
+        <h2>Admin Profile</h2>
+        <p><strong>Email:</strong> {{ adminData.email }}</p>
+        <p><strong>Role:</strong> {{ adminData.role }}</p>
+        <div class="modal-actions">
+          <button class="btn close-btn" (click)="toggleModal()">Close</button>
+          <button class="btn logout-btn" (click)="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
