@@ -1,0 +1,24 @@
+<mat-dialog-content>
+  <div *ngIf="cvs.length>0" >
+    <mat-list role="list">
+      <mat-list-item *ngFor="let cv of cvs" role="listitem">
+        <mat-radio-button [value]="cv.id" (change)="onSelectCv(cv.id)" >{{ cv.titre }}</mat-radio-button>
+      </mat-list-item>
+    </mat-list>
+    <mat-paginator
+      [length]="totalElements"
+      [pageSize]="size"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      [pageIndex]="page"
+      (page)="onPageChange($event)"
+      aria-label="Select page of posts">
+    </mat-paginator>
+  </div>
+  <div *ngIf="cvs.length==0">
+    <p>Aucun cv n'est disponible</p>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onApply()">Postuler avec ce CV</button>
+  <button mat-button mat-dialog-close (click)="onClose()" >Fermer</button>
+</mat-dialog-actions>
