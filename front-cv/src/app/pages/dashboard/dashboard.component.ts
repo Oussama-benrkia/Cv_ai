@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,10 +7,22 @@ import { Component } from '@angular/core';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   role: string = 'user'; // Exemple : récupéré via un service ou une API
+  stats: any = {};
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
+
+
+  ngOnInit() {
+    this.fetchDashboardStats();
+  }
+
+  fetchDashboardStats() {
+    this.http.get('/api/dashboard/stats').subscribe(data => {
+      this.stats = data;
+    });
+  }
 
   isAdmin() {
     return this.role === 'admin';

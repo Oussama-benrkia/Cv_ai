@@ -1,0 +1,461 @@
+<div class="dashboard-layout">
+  <!-- Sidebar Navigation -->
+  <nav class="sidebar">
+    <div class="logo">
+      <fa-icon [icon]="faLayerGroup" class="logo-icon"></fa-icon>
+      <h2>Admin Panel</h2>
+    </div>
+    
+    <div class="nav-links">
+      <a [class.active]="activeSection === 'dashboard'" (click)="setActiveSection('dashboard')">
+        <fa-icon [icon]="faChartLine"></fa-icon>
+        Dashboard
+      </a>
+      <a [class.active]="activeSection === 'students'" (click)="setActiveSection('students')">
+        <fa-icon [icon]="faUserGraduate"></fa-icon>
+        Students
+      </a>
+      <a [class.active]="activeSection === 'hr'" (click)="setActiveSection('hr')">
+        <fa-icon [icon]="faBriefcase"></fa-icon>
+        HR Managers
+      </a>
+      <a [class.active]="activeSection === 'posts'" (click)="setActiveSection('posts')">
+        <fa-icon [icon]="faClipboardList"></fa-icon>
+        Job Posts
+      </a>
+      <a [class.active]="activeSection === 'cvs'" (click)="setActiveSection('cvs')">
+        <fa-icon [icon]="faFileAlt"></fa-icon>
+        CVs
+      </a>
+      <a [class.active]="activeSection === 'applications'" (click)="setActiveSection('applications')">
+        <fa-icon [icon]="faPaperPlane"></fa-icon>
+        Applications
+      </a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Top Header -->
+    <header class="top-header">
+      <div class="search-bar">
+        <fa-icon [icon]="faSearch"></fa-icon>
+        <input type="text" placeholder="Search...">
+      </div>
+      <div class="header-actions">
+        <button class="notifications">
+          <fa-icon [icon]="faBell"></fa-icon>
+        </button>
+        <div class="profile">
+          <div class="avatar-placeholder">
+            <fa-icon [icon]="faUser"></fa-icon>
+          </div>
+          <span>Admin</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-content" *ngIf="activeSection === 'dashboard'">
+      <div class="stats-grid">
+        <div class="stats-card total-students">
+          <div class="card-icon">
+            <fa-icon [icon]="faUserGraduate"></fa-icon>
+          </div>
+          <div class="card-content">
+            <h3>Student Users</h3>
+            <p class="number">{{ stats.totalEtudiantUsers }}</p>
+            <p class="description">Active student accounts</p>
+          </div>
+        </div>
+
+        <div class="stats-card total-hr">
+          <div class="card-icon">
+            <fa-icon [icon]="faBriefcase"></fa-icon>
+          </div>
+          <div class="card-content">
+            <h3>HR Managers</h3>
+            <p class="number">{{ stats.totalRhUsers }}</p>
+            <p class="description">Active HR accounts</p>
+          </div>
+        </div>
+
+        <div class="stats-card total-posts">
+          <div class="card-icon">
+            <fa-icon [icon]="faClipboardList"></fa-icon>
+          </div>
+          <div class="card-content">
+            <h3>Job Posts</h3>
+            <p class="number">{{ stats.totalPosts }}</p>
+            <p class="description">Active job listings</p>
+          </div>
+        </div>
+
+        <div class="stats-card total-cvs">
+          <div class="card-icon">
+            <fa-icon [icon]="faFileAlt"></fa-icon>
+          </div>
+          <div class="card-content">
+            <h3>Total CVs</h3>
+            <p class="number">{{ stats.totalCvs }}</p>
+            <p class="description">Submitted resumes</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Students Content -->
+    <div class="content-section" *ngIf="activeSection === 'students'">
+      <div class="section-header">
+        <h2>Students Management</h2>
+        <button class="add-btn" (click)="openAddUserDialog('STUDENT')">
+          <fa-icon [icon]="faPlus"></fa-icon> Add Student
+        </button>
+      </div>
+
+      <div class="table-container">
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of getFilteredUsers()">
+              <td class="user-image">
+                <div class="avatar-placeholder">
+                  {{ getInitials(user.prenom, user.nom) }}
+                </div>
+              </td>
+              <td>{{ user.prenom }}</td>
+              <td>{{ user.nom }}</td>
+              <td>{{ user.email }}</td>
+              <td class="actions">
+                <button class="action-btn view" title="View">
+                  <fa-icon [icon]="faEye"></fa-icon>
+                </button>
+                <button class="action-btn edit" title="Edit">
+                  <fa-icon [icon]="faEdit"></fa-icon>
+                </button>
+                <button class="action-btn delete" title="Delete">
+                  <fa-icon [icon]="faTrash"></fa-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- HR Managers Content -->
+    <div class="content-section" *ngIf="activeSection === 'hr'">
+      <div class="section-header">
+        <h2>HR Managers Management</h2>
+        <button class="add-btn" (click)="openAddUserDialog('HR')">
+          <fa-icon [icon]="faPlus"></fa-icon> Add HR Manager
+        </button>
+      </div>
+
+      <div class="table-container">
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Company</th>
+              <th>Job Posts</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of getFilteredUsers()">
+              <td class="user-image">
+                <div class="avatar-placeholder">
+                  {{ getInitials(user.prenom, user.nom) }}
+                </div>
+              </td>
+              <td>{{ user.prenom }}</td>
+              <td>{{ user.nom }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ extractCompany(user.email) }}</td>
+              <td class="job-posts-count">{{ getHrJobPostsCount(user.id) }}</td>
+              <td class="actions">
+                <button class="action-btn view" title="View">
+                  <fa-icon [icon]="faEye"></fa-icon>
+                </button>
+                <button class="action-btn edit" title="Edit">
+                  <fa-icon [icon]="faEdit"></fa-icon>
+                </button>
+                <button class="action-btn delete" title="Delete">
+                  <fa-icon [icon]="faTrash"></fa-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Job Posts Content -->
+    <div class="content-section" *ngIf="activeSection === 'posts'">
+      <div class="section-header">
+        <h2>Job Posts Management</h2>
+        <button class="add-btn" (click)="openAddPostDialog()">
+          <fa-icon [icon]="faPlus"></fa-icon> Add Job Post
+        </button>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <fa-icon [icon]="faClipboardList"></fa-icon>
+          </div>
+          <div class="stat-content">
+            <h3>Active Posts</h3>
+            <p class="number">{{ getActivePostsCount() }}</p>
+            <p class="description">Current job listings</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <fa-icon [icon]="faPaperPlane"></fa-icon>
+          </div>
+          <div class="stat-content">
+            <h3>Total Applications</h3>
+            <p class="number">{{ getTotalApplications() }}</p>
+            <p class="description">Received applications</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Company</th>
+              <th>Location</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Applications</th>
+              <th>Posted Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let post of posts">
+              <td class="job-title">
+                <a href="#">{{ post.title }}</a>
+              </td>
+              <td>{{ post.company }}</td>
+              <td>{{ post.location }}</td>
+              <td>
+                <span class="badge type-{{ post.type.toLowerCase() }}">{{ post.type }}</span>
+              </td>
+              <td>
+                <span class="badge status-{{ post.status.toLowerCase() }}">{{ post.status }}</span>
+              </td>
+              <td class="applications-count">{{ post.applications }}</td>
+              <td>{{ post.createdAt | date:'mediumDate' }}</td>
+              <td class="actions">
+                <button class="action-btn view" title="View Details">
+                  <fa-icon [icon]="faEye"></fa-icon>
+                </button>
+                <button class="action-btn edit" title="Edit">
+                  <fa-icon [icon]="faEdit"></fa-icon>
+                </button>
+                <button class="action-btn delete" title="Delete">
+                  <fa-icon [icon]="faTrash"></fa-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="pagination">
+          <button [disabled]="currentPage === 0" (click)="changePage(currentPage - 1)">
+            <fa-icon [icon]="faChevronLeft"></fa-icon>
+          </button>
+          <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+          <button [disabled]="currentPage === totalPages - 1" (click)="changePage(currentPage + 1)">
+            <fa-icon [icon]="faChevronRight"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CVs Content -->
+    <div class="content-section" *ngIf="activeSection === 'cvs'">
+      <div class="section-header">
+        <h2>CVs Management</h2>
+        <div class="search-box">
+          <fa-icon [icon]="faSearch"></fa-icon>
+          <input type="text" placeholder="Search CVs..." [(ngModel)]="cvSearchTerm">
+        </div>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <fa-icon [icon]="faFileAlt"></fa-icon>
+          </div>
+          <div class="stat-content">
+            <h3>Total CVs</h3>
+            <p class="number">{{ cvs.length }}</p>
+            <p class="description">Submitted resumes</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <fa-icon [icon]="faCheckCircle"></fa-icon>
+          </div>
+          <div class="stat-content">
+            <h3>Active CVs</h3>
+            <p class="number">{{ getActiveCvsCount() }}</p>
+            <p class="description">Currently active</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Title</th>
+              <th>Education</th>
+              <th>Experience</th>
+              <th>Skills</th>
+              <th>Status</th>
+              <th>Last Updated</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cv of cvs">
+              <td class="student-name">{{ cv.studentName }}</td>
+              <td class="cv-title">{{ cv.title }}</td>
+              <td>{{ cv.education }}</td>
+              <td>{{ cv.experience }}</td>
+              <td>
+                <div class="skills-list">
+                  <span class="skill-tag" *ngFor="let skill of cv.skills.slice(0, 3)">{{ skill }}</span>
+                  <span class="more-skills" *ngIf="cv.skills.length > 3">+{{ cv.skills.length - 3 }}</span>
+                </div>
+              </td>
+              <td>
+                <span class="badge status-{{ cv.status.toLowerCase() }}">{{ cv.status }}</span>
+              </td>
+              <td>{{ cv.lastUpdated | date:'mediumDate' }}</td>
+              <td class="actions">
+                <button class="action-btn view" title="View CV">
+                  <fa-icon [icon]="faEye"></fa-icon>
+                </button>
+                <button class="action-btn download" title="Download CV">
+                  <fa-icon [icon]="faDownload"></fa-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <button [disabled]="currentPage === 0" (click)="changePage(currentPage - 1)">
+            <fa-icon [icon]="faChevronLeft"></fa-icon>
+          </button>
+          <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+          <button [disabled]="currentPage === totalPages - 1" (click)="changePage(currentPage + 1)">
+            <fa-icon [icon]="faChevronRight"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Applications Content -->
+    <div class="content-section" *ngIf="activeSection === 'applications'">
+      <div class="section-header">
+        <h2>Applications Management</h2>
+        <div class="header-actions">
+          <div class="search-box">
+            <fa-icon [icon]="faSearch"></fa-icon>
+            <input type="text" placeholder="Search applications..." [(ngModel)]="applicationSearchTerm">
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <fa-icon [icon]="faPaperPlane"></fa-icon>
+          </div>
+          <div class="stat-content">
+            <h3>Total Applications</h3>
+            <p class="number">{{ applications.length }}</p>
+            <p class="description">All applications</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <fa-icon [icon]="faClock"></fa-icon>
+          </div>
+          <div class="stat-content">
+            <h3>Pending Review</h3>
+            <p class="number">{{ getPendingApplicationsCount() }}</p>
+            <p class="description">Awaiting response</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Job Title</th>
+              <th>Company</th>
+              <th>Applied Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let app of applications">
+              <td>{{ app.studentName }}</td>
+              <td>{{ app.jobTitle }}</td>
+              <td>{{ app.company }}</td>
+              <td>{{ app.appliedDate | date:'mediumDate' }}</td>
+              <td>
+                <span class="status-badge" [class]="app.status.toLowerCase()">
+                  {{ app.status }}
+                </span>
+              </td>
+              <td class="actions">
+                <button class="action-btn view" title="View Details">
+                  <fa-icon [icon]="faEye"></fa-icon>
+                </button>
+                <button class="action-btn cv" title="View CV">
+                  <fa-icon [icon]="faFileAlt"></fa-icon>
+                </button>
+                <button class="action-btn edit" title="Update Status">
+                  <fa-icon [icon]="faEdit"></fa-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>

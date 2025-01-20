@@ -8,6 +8,8 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+  prenom: string = '';
+  nom: string = '';
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
@@ -21,10 +23,12 @@ export class RegisterComponent {
     }
 
     const formData = new FormData();
+    formData.append('prenom', this.prenom);
+    formData.append('nom', this.nom);
     formData.append('email', this.email);
     formData.append('password', this.password);
 
-    this.http.post('/auth/register', formData).subscribe(
+    this.http.post('http://localhost:8081/auth/register', formData).subscribe(
       (response) => {
         alert('Registration successful!');
         console.log(response);

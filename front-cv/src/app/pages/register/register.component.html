@@ -9,6 +9,28 @@
     <p class="register-subtitle">Create your account to get started</p>
     <form (ngSubmit)="onRegister()" class="register-form">
       <div class="form-group">
+        <label for="prenom">prenom </label>
+        <input
+          type="text"
+          id="prenom"
+          [(ngModel)]="prenom"
+          name="prenom"
+          placeholder="Enter your prenom"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="nom ">nom </label>
+        <input
+          type="nom "
+          id="nom "
+          [(ngModel)]="nom"
+          name="nom"
+          placeholder="Enter your nom"
+          required
+        />
+      </div>
+      <div class="form-group">
         <label for="email">Email</label>
         <input
           type="email"

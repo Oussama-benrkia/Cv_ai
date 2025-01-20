@@ -1,10 +1,21 @@
 <div *ngIf="isAdmin(); else userDashboard">
-    <h1>Admin Dashboard</h1>
-    <!-- Contenu spécifique à l'admin -->
+  <h1>Admin Dashboard</h1>
+  <div>
+    <p>Total Users: {{ stats.totalUsers }}</p>
+    <p>Total CVs: {{ stats.totalCvs }}</p>
+    <p>Total Posts: {{ stats.totalPosts }}</p>
+    <p>Total Etudiant Users: {{ stats.totalEtudiantUsers }}</p>
+    <p>Total RH Users: {{ stats.totalRhUsers }}</p>
   </div>
-  
-  <ng-template #userDashboard>
-    <h1>User Dashboard</h1>
-    <!-- Contenu spécifique à l'utilisateur -->
-  </ng-template>
-  
+</div>
+
+<ng-template #userDashboard>
+  <h1>User Dashboard</h1>
+  <div>
+    <p>Total Users: {{ stats.totalUsers }}</p>
+    <p>Total CVs: {{ stats.totalCvs }}</p>
+    <p>Total Posts: {{ stats.totalPosts }}</p>
+    <p>Total Etudiant Users: {{ stats.totalEtudiantUsers }}</p>
+    <p>Total RH Users: {{ stats.totalRhUsers }}</p>
+  </div>
+</ng-template>
