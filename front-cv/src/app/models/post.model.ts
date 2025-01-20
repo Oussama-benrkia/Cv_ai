@@ -4,4 +4,5 @@ export interface Post {
   description: string;
   rhId:number;
   creatAt: Date
+  email:string;
 }

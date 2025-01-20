@@ -6,6 +6,6 @@ export interface Cv {
 export interface CvResponse {
   id: number;
   titre: string;
-  url:string;
-  userId:number
+  path: string;
+  createdAt: Date;
 }

@@ -1,0 +1,166 @@
+.dashboard-container {
+  padding: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+}
+
+.welcome-card {
+  margin-bottom: 32px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+}
+
+.dashboard-title {
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.welcome-content {
+  padding: 24px 16px;
+}
+
+.upload-btn {
+  background: white !important;
+  color: #667eea !important;
+  padding: 8px 24px;
+  font-weight: 500;
+}
+
+.upload-btn mat-icon {
+  margin-right: 8px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 32px;
+}
+
+.dashboard-card {
+  height: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+  background: white;
+  overflow: hidden;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.header-icon {
+  margin-right: 12px;
+  color: #667eea;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.header-count {
+  margin-left: auto;
+  background: #f0f2f5;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 14px;
+  color: #667eea;
+}
+
+.dashboard-list {
+  padding: 16px;
+}
+
+.list-item {
+  margin-bottom: 16px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+  height: auto !important;
+  padding: 12px !important;
+}
+
+.list-item:hover {
+  background-color: #f8fafc;
+}
+
+.item-title {
+  font-weight: 500;
+  color: #2d3748;
+  margin-bottom: 4px;
+}
+
+.item-subtitle {
+  color: #718096;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.inline-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
+
+.action-button {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.list-item:hover .action-button {
+  opacity: 1;
+}
+
+.view-button {
+  margin-left: auto;
+  font-weight: 500;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 32px;
+  color: #a0aec0;
+  font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 16px;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-button {
+    opacity: 1;
+  }
+  
+  .header-count {
+    display: none;
+  }
+}
+
+.mat-card-content {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.mat-list-item {
+  margin-bottom: 8px;
+}
+
+.status-chip {
+  margin-left: 8px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+} 
