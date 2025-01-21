@@ -47,7 +47,7 @@ export class LoginComponent {
             } else if (primaryRole === 'RH') {
               this.router.navigate(['/rh-dashboard']);
             } else {
-              this.router.navigate(['/user-dashboard']);
+              this.router.navigate(['../../components/student-dashboard']);
             }
           } else {
             console.error('User role not found in token.');
