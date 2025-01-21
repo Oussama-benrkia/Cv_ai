@@ -1,8 +1,7 @@
-
 Flask
 requests
 docx2txt
 PyMuPDF
 mimetypes
-
+confluent-kafka
 

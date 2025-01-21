@@ -1,0 +1,114 @@
+<div class="dashboard-container">
+  <!-- Welcome Card -->
+  <mat-card class="welcome-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>account_circle</mat-icon>
+      <mat-card-title class="dashboard-title">Student Dashboard</mat-card-title>
+      <mat-card-subtitle>Manage your applications and CVs</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="welcome-content">
+      <button mat-raised-button color="primary" (click)="openCvUploadDialog()" class="upload-btn">
+        <mat-icon>upload_file</mat-icon>
+        Upload New CV
+      </button>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Dashboard Grid -->
+  <div class="dashboard-grid">
+    <!-- My Applications Section -->
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-icon class="header-icon">work</mat-icon>
+        <mat-card-title>My Applications</mat-card-title>
+        <span class="header-count">{{ myApplications.length }}</span>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list class="dashboard-list">
+          <ng-container *ngIf="myApplications.length > 0; else noApplications">
+            <mat-list-item *ngFor="let application of myApplications" class="list-item">
+              <mat-icon matListItemIcon [style.color]="getStatusColor(application.status)">
+                {{ application.status === 'Accepted' ? 'check_circle' : 
+                   application.status === 'Rejected' ? 'cancel' : 'pending' }}
+              </mat-icon>
+              <div matListItemTitle class="item-title">{{ application.description }}</div>
+              <div matListItemLine class="item-subtitle">
+                Status: <span [style.color]="getStatusColor(application.status)">{{ application.status }}</span>
+                • {{ application.creatAt | date }}
+              </div>
+            </mat-list-item>
+          </ng-container>
+          <ng-template #noApplications>
+            <div class="empty-state">No applications found.</div>
+          </ng-template>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- My CVs Section -->
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-icon class="header-icon">description</mat-icon>
+        <mat-card-title>My CVs</mat-card-title>
+        <span class="header-count">{{ myCvs.length }}</span>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list class="dashboard-list">
+          <ng-container *ngIf="myCvs.length > 0; else noCVs">
+            <mat-list-item *ngFor="let cv of myCvs" class="list-item">
+              <mat-icon matListItemIcon color="primary">description</mat-icon>
+              <div matListItemTitle class="item-title">{{ cv.titre }}</div>
+              <div matListItemLine class="item-subtitle">
+                Uploaded: {{ cv.createdAt | date }}
+              </div>
+              <button mat-icon-button [matMenuTriggerFor]="menu" class="action-button">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                  <mat-icon color="primary">download</mat-icon>
+                  <span>Download</span>
+                </button>
+                <button mat-menu-item class="delete-button">
+                  <mat-icon color="warn">delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </mat-list-item>
+          </ng-container>
+          <ng-template #noCVs>
+            <div class="empty-state">No CVs found.</div>
+          </ng-template>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Recent Job Posts Section -->
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-icon class="header-icon">business_center</mat-icon>
+        <mat-card-title>Recent Job Posts</mat-card-title>
+        <span class="header-count">{{ recentPosts.length }}</span>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list class="dashboard-list">
+          <ng-container *ngIf="recentPosts.length > 0; else noPosts">
+            <mat-list-item *ngFor="let post of recentPosts" class="list-item">
+              <mat-icon matListItemIcon color="primary">business</mat-icon>
+              <div matListItemTitle class="item-title">{{ post.titre }}</div>
+              <div matListItemLine class="item-subtitle">
+                <mat-icon class="inline-icon">email</mat-icon> {{ post.email }}
+              </div>
+              <button mat-stroked-button color="primary" [routerLink]="['/posts', post.id]" class="view-button">
+                View Details
+              </button>
+            </mat-list-item>
+          </ng-container>
+          <ng-template #noPosts>
+            <div class="empty-state">No recent job posts found.</div>
+          </ng-template>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

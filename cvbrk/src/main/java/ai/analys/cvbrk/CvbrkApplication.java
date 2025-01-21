@@ -58,7 +58,7 @@ public class CvbrkApplication {
             UserResponse user = userService.findById(1L).orElse(null);
             if (user == null) {
                 log.info("Admin user not found. Creating default admin user...");
-                UserRequest adminRequest = new UserRequest("admin", "admin", "admin@admin.com", "adminadmin", Role.ADMIN.toString(), null);
+                UserRequest adminRequest = new UserRequest("admin", "admin", "kay", "adminadmin", Role.ADMIN.toString(), null);
                 userService.save(adminRequest);
                 log.info("Admin user created successfully with username: {}", adminRequest.email());
             } else {

@@ -1,0 +1,1 @@
+from .services import fetch_and_process_data

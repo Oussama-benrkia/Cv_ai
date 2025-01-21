@@ -16,6 +16,29 @@ import { UserComponent } from './layouts/user/user.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 import { RhDashboardComponent } from './pages/rh-dashboard/rh-dashboard.component';
 import { UserDashboardComponent } from './pages/user-dashboard/user-dashboard.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { PostListComponent } from './components/post-list/post-list.component';
+import { PostDetailsComponent } from './components/post-details/post-details.component';
+import { CvListComponent } from './components/cv-list/cv-list.component';
+import { CvUploadComponent } from './components/cv-upload/cv-upload.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MyApplicationsComponent } from './components/my-applications/my-applications.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MainDashboardComponent } from './components/main-dashboard/main-dashboard.component';
+import { StudentDashboardComponent } from './components/student-dashboard/student-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +50,14 @@ import { UserDashboardComponent } from './pages/user-dashboard/user-dashboard.co
     UserComponent,
     AdminDashboardComponent,
     RhDashboardComponent,
-    UserDashboardComponent
+    UserDashboardComponent,
+    PostListComponent,
+    PostDetailsComponent,
+    CvListComponent,
+    CvUploadComponent,
+    MyApplicationsComponent,
+    MainDashboardComponent,
+    StudentDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +68,24 @@ import { UserDashboardComponent } from './pages/user-dashboard/user-dashboard.co
     FontAwesomeModule
   ],
   providers: [
-    provideHttpClient(withInterceptorsFromDi())
+    provideHttpClient(withInterceptorsFromDi()),
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+    MatListModule,
+    MatDialogModule,
+    MatRadioModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatSnackBarModule,
+    HttpClientModule,
+    MatPaginatorModule,
+    MatTabsModule,
+    MatMenuModule,
+    MatDividerModule
   ],
   bootstrap: [AppComponent]
 })

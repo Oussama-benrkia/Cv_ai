@@ -1,0 +1,133 @@
+2025-01-18 18:17:24,834 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-01-18 18:17:24,835 - INFO - [33mPress CTRL+C to quit[0m
+2025-01-18 18:17:24,837 - INFO -  * Restarting with stat
+2025-01-18 18:17:24,841 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: ['Postule_topic']: Broker: Unknown topic or partition"}
+2025-01-18 18:17:25,342 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: ['Postule_topic']: Broker: Unknown topic or partition"}
+2025-01-18 18:17:25,352 - WARNING -  * Debugger is active!
+2025-01-18 18:17:25,356 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 19:28:10,775 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: ['Postule_topic']: Broker: Unknown topic or partition"}
+2025-01-18 19:28:10,783 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-01-18 19:28:10,785 - INFO - [33mPress CTRL+C to quit[0m
+2025-01-18 19:28:10,788 - INFO -  * Restarting with stat
+2025-01-18 19:28:11,398 - WARNING -  * Debugger is active!
+2025-01-18 19:28:11,402 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: ['Postule_topic']: Broker: Unknown topic or partition"}
+2025-01-18 19:28:11,403 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 19:34:24,000 - INFO -  * Detected change in 'C:\\Users\\Oussama\\Desktop\\pfa\\cvanalyser\\services\\services.py', reloading
+2025-01-18 19:34:24,127 - INFO -  * Restarting with stat
+2025-01-18 19:34:24,655 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: ['Postule_topic']: Broker: Unknown topic or partition"}
+2025-01-18 19:34:24,665 - WARNING -  * Debugger is active!
+2025-01-18 19:34:24,670 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 19:34:25,693 - INFO -  * Detected change in 'C:\\Users\\Oussama\\Desktop\\pfa\\cvanalyser\\services\\services.py', reloading
+2025-01-18 19:34:25,814 - INFO -  * Restarting with stat
+2025-01-18 19:34:26,380 - WARNING -  * Debugger is active!
+2025-01-18 19:34:26,384 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 19:34:26,396 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: ['Postule_topic']: Broker: Unknown topic or partition"}
+2025-01-18 19:34:28,409 - INFO -  * Detected change in 'C:\\Users\\Oussama\\Desktop\\pfa\\cvanalyser\\services\\services.py', reloading
+2025-01-18 19:34:28,524 - INFO -  * Restarting with stat
+2025-01-18 19:34:29,053 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: ['Postule_topic']: Broker: Unknown topic or partition"}
+2025-01-18 19:34:29,064 - WARNING -  * Debugger is active!
+2025-01-18 19:34:29,069 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 19:34:32,096 - INFO -  * Detected change in 'C:\\Users\\Oussama\\Desktop\\pfa\\cvanalyser\\services\\services.py', reloading
+2025-01-18 19:34:32,195 - INFO -  * Restarting with stat
+2025-01-18 19:34:32,727 - WARNING -  * Debugger is active!
+2025-01-18 19:34:32,732 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 19:34:32,735 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: ['Postule_topic']: Broker: Unknown topic or partition"}
+2025-01-18 19:34:34,757 - INFO -  * Detected change in 'C:\\Users\\Oussama\\Desktop\\pfa\\cvanalyser\\services\\services.py', reloading
+2025-01-18 19:34:34,871 - INFO -  * Restarting with stat
+2025-01-18 19:34:35,391 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: ['Postule_topic']: Broker: Unknown topic or partition"}
+2025-01-18 19:34:35,392 - WARNING -  * Debugger is active!
+2025-01-18 19:34:35,399 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 19:34:42,448 - INFO -  * Detected change in 'C:\\Users\\Oussama\\Desktop\\pfa\\cvanalyser\\services\\services.py', reloading
+2025-01-18 19:34:42,548 - INFO -  * Restarting with stat
+2025-01-18 19:34:43,077 - WARNING -  * Debugger is active!
+2025-01-18 19:34:43,082 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 19:34:43,095 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: ['Postule_topic']: Broker: Unknown topic or partition"}
+2025-01-18 19:34:46,110 - INFO -  * Detected change in 'C:\\Users\\Oussama\\Desktop\\pfa\\cvanalyser\\services\\services.py', reloading
+2025-01-18 19:34:46,214 - INFO -  * Restarting with stat
+2025-01-18 19:34:46,713 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: ['Postule_topic']: Broker: Unknown topic or partition"}
+2025-01-18 19:34:46,720 - WARNING -  * Debugger is active!
+2025-01-18 19:34:46,724 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 19:35:08,832 - INFO -  * Detected change in 'C:\\Users\\Oussama\\Desktop\\pfa\\cvanalyser\\services\\services.py', reloading
+2025-01-18 19:35:08,939 - INFO -  * Restarting with stat
+2025-01-18 19:35:09,541 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: ['Postule_topic']: Broker: Unknown topic or partition"}
+2025-01-18 19:35:09,555 - WARNING -  * Debugger is active!
+2025-01-18 19:35:09,560 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 19:35:11,586 - INFO -  * Detected change in 'C:\\Users\\Oussama\\Desktop\\pfa\\cvanalyser\\services\\services.py', reloading
+2025-01-18 19:35:11,708 - INFO -  * Restarting with stat
+2025-01-18 19:35:12,221 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: ['Postule_topic']: Broker: Unknown topic or partition"}
+2025-01-18 19:35:12,229 - WARNING -  * Debugger is active!
+2025-01-18 19:35:12,233 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 19:35:13,255 - INFO -  * Detected change in 'C:\\Users\\Oussama\\Desktop\\pfa\\cvanalyser\\services\\services.py', reloading
+2025-01-18 19:35:13,382 - INFO -  * Restarting with stat
+2025-01-18 19:35:13,951 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: ['Postule_topic']: Broker: Unknown topic or partition"}
+2025-01-18 19:35:13,961 - WARNING -  * Debugger is active!
+2025-01-18 19:35:13,966 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 19:38:56,924 - INFO -  * Detected change in 'C:\\Users\\Oussama\\Desktop\\pfa\\cvanalyser\\listener\\producePost.py', reloading
+2025-01-18 19:38:57,028 - INFO -  * Restarting with stat
+2025-01-18 19:38:57,512 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: ['Postule_topic']: Broker: Unknown topic or partition"}
+2025-01-18 19:38:57,522 - WARNING -  * Debugger is active!
+2025-01-18 19:38:57,526 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 19:38:59,552 - INFO -  * Detected change in 'C:\\Users\\Oussama\\Desktop\\pfa\\cvanalyser\\listener\\producePost.py', reloading
+2025-01-18 19:38:59,676 - INFO -  * Restarting with stat
+2025-01-18 19:48:38,799 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: ['Postule_topic']: Broker: Unknown topic or partition"}
+2025-01-18 19:48:38,809 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-01-18 19:48:38,809 - INFO - [33mPress CTRL+C to quit[0m
+2025-01-18 19:48:38,815 - INFO -  * Restarting with stat
+2025-01-18 19:48:39,430 - WARNING -  * Debugger is active!
+2025-01-18 19:48:39,440 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 19:48:39,467 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: ['Postule_topic']: Broker: Unknown topic or partition"}
+2025-01-18 20:47:23,120 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-01-18 20:47:23,141 - INFO - [33mPress CTRL+C to quit[0m
+2025-01-18 20:47:23,145 - INFO -  * Restarting with stat
+2025-01-18 20:47:23,920 - WARNING -  * Debugger is active!
+2025-01-18 20:47:23,927 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 20:49:12,665 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-01-18 20:49:12,666 - INFO - [33mPress CTRL+C to quit[0m
+2025-01-18 20:49:12,668 - INFO -  * Restarting with stat
+2025-01-18 20:49:13,089 - WARNING -  * Debugger is active!
+2025-01-18 20:49:13,094 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 20:49:15,795 - INFO - Raw message received: "{\r\n  \"id\" : 14,\r\n  \"postId\" : 21,\r\n  \"description\" : null,\r\n  \"message\" : null,\r\n  \"pourcentage\" : 0.0,\r\n  \"creatAt\" : \"18/01/2025 18:18:23\",\r\n  \"etudiantId\" : 6\r\n}"
+2025-01-18 20:49:15,795 - INFO - Decoded JSON: {
+  "id" : 14,
+  "postId" : 21,
+  "description" : null,
+  "message" : null,
+  "pourcentage" : 0.0,
+  "creatAt" : "18/01/2025 18:18:23",
+  "etudiantId" : 6
+}
+2025-01-18 20:49:15,798 - CRITICAL - Unexpected error: string indices must be integers, not 'str'
+2025-01-18 20:49:15,800 - INFO - Raw message received: "{\r\n  \"id\" : 15,\r\n  \"postId\" : 21,\r\n  \"description\" : null,\r\n  \"message\" : null,\r\n  \"pourcentage\" : 0.0,\r\n  \"creatAt\" : \"18/01/2025 19:32:26\",\r\n  \"etudiantId\" : 6\r\n}"
+2025-01-18 20:49:15,801 - INFO - Decoded JSON: {
+  "id" : 15,
+  "postId" : 21,
+  "description" : null,
+  "message" : null,
+  "pourcentage" : 0.0,
+  "creatAt" : "18/01/2025 19:32:26",
+  "etudiantId" : 6
+}
+2025-01-18 20:49:15,802 - CRITICAL - Unexpected error: string indices must be integers, not 'str'
+2025-01-18 20:55:00,268 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-01-18 20:55:00,270 - INFO - [33mPress CTRL+C to quit[0m
+2025-01-18 20:55:00,274 - INFO -  * Restarting with stat
+2025-01-18 20:55:00,825 - WARNING -  * Debugger is active!
+2025-01-18 20:55:00,852 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 21:00:00,234 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: Postule_topic: Broker: Unknown topic or partition"}
+2025-01-18 21:00:00,811 - ERROR - Consumer error: KafkaError{code=UNKNOWN_TOPIC_OR_PART,val=3,str="Subscribed topic not available: Postule_topic: Broker: Unknown topic or partition"}
+2025-01-18 21:00:39,635 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-01-18 21:00:39,635 - INFO - [33mPress CTRL+C to quit[0m
+2025-01-18 21:00:39,637 - INFO -  * Restarting with stat
+2025-01-18 21:00:40,319 - WARNING -  * Debugger is active!
+2025-01-18 21:00:40,323 - INFO -  * Debugger PIN: 723-974-889
+2025-01-18 21:17:27,620 - INFO -  * Detected change in 'C:\\Users\\Oussama\\Desktop\\pfa\\cvanalyser\\main.py', reloading
+2025-01-18 21:17:27,838 - INFO -  * Restarting with stat
+2025-01-18 21:17:27,943 - INFO -  * Detected change in 'C:\\Users\\Oussama\\Desktop\\pfa\\cvanalyser\\main.py', reloading
+2025-01-18 21:17:28,163 - INFO -  * Restarting with stat

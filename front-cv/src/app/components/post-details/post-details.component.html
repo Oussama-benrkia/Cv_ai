@@ -1,0 +1,15 @@
+<div *ngIf="post">
+  <mat-card class="post-card">
+    <mat-card-header>
+      <mat-card-title>{{ post.titre }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ post.description }}</p>
+      <p>Posté le : {{ post.creatAt | date }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button *ngIf="!hasPostuled" mat-raised-button color="primary" (click)="openCvListDialog()">Postuler</button>
+      <button *ngIf="hasPostuled" mat-raised-button disabled color="accent">Vous avez deja postulé</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

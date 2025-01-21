@@ -1,5 +1,6 @@
 package ai.analys.cvbrk.services;
 
+import ai.analys.cvbrk.analyse.ServiceCallanalyse;
 import ai.analys.cvbrk.common.PageResponse;
 import ai.analys.cvbrk.dao.CvRepository;
 import ai.analys.cvbrk.dao.PostuleRepository;
@@ -10,6 +11,8 @@ import ai.analys.cvbrk.entity.Post;
 import ai.analys.cvbrk.entity.Postule;
 import ai.analys.cvbrk.entity.User;
 import ai.analys.cvbrk.mapper.PostuleMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,14 +31,19 @@ public class PostuleeService {
     private final PostuleMapper postuleMapper;
     private final PostService postService;
     private final CvRepository cvRepository;
+    private final ObjectMapper objectMapper;
+
+    private final ServiceCallanalyse postuleeProducer;
 
 
-    public PostuleeService(PostuleRepository postuleRepository, UserService userService, PostuleMapper postuleMapper, PostService postService, CvRepository cvRepository) {
+    public PostuleeService(PostuleRepository postuleRepository, UserService userService, PostuleMapper postuleMapper, PostService postService, CvRepository cvRepository, ObjectMapper objectMapper, ServiceCallanalyse postuleeProducer) {
         this.postuleRepository = postuleRepository;
         this.userService = userService;
         this.postuleMapper = postuleMapper;
         this.postService = postService;
         this.cvRepository = cvRepository;
+        this.objectMapper = objectMapper;
+        this.postuleeProducer = postuleeProducer;
     }
 
 
@@ -61,20 +69,28 @@ public class PostuleeService {
     public Optional<PostuleResponse> findPostuleByid(Long id) {
         return Optional.ofNullable(postuleMapper.toResponse(this.findPostuleById(id)));
     }
-    public Optional<PostuleResponse> add(PostuleRequest request ,Long postid) {
+    public Optional<PostuleResponse> add(PostuleRequest request, Long postid) throws JsonProcessingException {
         Post post = postService.findPostById(postid);
-        Cv cv =cvRepository.findById(request.idcv()).orElseThrow(() -> new EntityNotFoundException("CV with ID " + request.idcv() + " not found"));
-        if(checkPostule(postid, cv.getId())){
+        Cv cv = cvRepository.findById(request.idcv())
+                .orElseThrow(() -> new EntityNotFoundException("CV with ID " + request.idcv() + " not found"));
+
+        if (checkPostule(postid, cv.getId())) {
             throw new IllegalStateException("This student has already postuled to this job");
         }
+
         Postule postule = Postule.builder()
                 .etudiant(cv)
                 .post(post)
                 .message(request.mesaage())
                 .build();
+
         Postule savedPostule = postuleRepository.save(postule);
-        return Optional.ofNullable(postuleMapper.toResponse(savedPostule));
+
+
+        PostuleResponse postuleResponse = postuleMapper.toResponse(savedPostule);
+        return Optional.ofNullable(postuleResponse);
     }
+
 
     public Optional<PostuleResponse> deletePostule(Long id) {
         Postule postule = findPostuleById(id);

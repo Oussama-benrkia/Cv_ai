@@ -1,0 +1,20 @@
+<mat-card *ngFor="let post of posts" class="post-card">
+  <mat-card-header>
+    <mat-card-title>{{ post.titre }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ post.description }}</p>
+    <p>Posté le : {{ post.creatAt | date }}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary"  [routerLink]="['/post', post.id]">Voir détails et postuler</button>
+  </mat-card-actions>
+</mat-card>
+<mat-paginator
+  [length]="totalElements"
+  [pageSize]="size"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+  [pageIndex]="page"
+  (page)="onPageChange($event)"
+  aria-label="Select page of posts">
+</mat-paginator>

@@ -8,6 +8,9 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 import { RhDashboardComponent } from './pages/rh-dashboard/rh-dashboard.component';
 import { UserDashboardComponent } from './pages/user-dashboard/user-dashboard.component';
+import { MainDashboardComponent } from './components/main-dashboard/main-dashboard.component';
+import { PostDetailsComponent } from './components/post-details/post-details.component';
+import { StudentDashboardComponent } from './components/student-dashboard/student-dashboard.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -17,6 +20,9 @@ const routes: Routes = [
   { path: 'admin-dashboard', component: AdminDashboardComponent },
   { path: 'rh-dashboard', component: RhDashboardComponent },
   { path: 'user-dashboard', component: UserDashboardComponent },
+  { path: '', component: MainDashboardComponent },
+  { path: 'post/:id', component: PostDetailsComponent },
+  {path: 'student-dashboard',component: StudentDashboardComponent,},
   {
     path: 'admin',
     component: AdminComponent,
@@ -30,7 +36,8 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
     ],
-  },
+  }
+
 ];
 
 @NgModule({
