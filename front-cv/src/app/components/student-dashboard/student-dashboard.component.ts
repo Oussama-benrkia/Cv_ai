@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from '../../models/post.model';
-import { PostuleResponse } from '../../models/postule.model';
 import { CvResponse } from '../../models/cv.model';
+import { PostuleResponse } from '../../models/postule.model'; // Import from the model file
 import { PostService } from '../../services/post-service';
 import { PostuleService } from '../../services/postule-service';
 import { CvService } from '../../services/cv-service';
@@ -14,7 +14,7 @@ import { CvUploadComponent } from '../cv-upload/cv-upload.component';
   styleUrls: ['./student-dashboard.component.css']
 })
 export class StudentDashboardComponent implements OnInit {
-  myApplications = [
+  myApplications: PostuleResponse[] = [
     {
       postId: 1,
       description: 'Frontend Developer Position',
@@ -94,13 +94,13 @@ export class StudentDashboardComponent implements OnInit {
   loadDashboardData(): void {
     // Load recent applications
     this.postuleService.findAllMyPostuleList().subscribe(
-      applications => this.myApplications = applications,
+      (applications: PostuleResponse[]) => this.myApplications = applications,
       error => console.error('Error loading applications:', error)
     );
 
     // Load CVs
     this.cvService.getAllCvsOfUserWithoutPagination().subscribe(
-      cvs => this.myCvs = cvs.map(cv => ({
+      (cvs: CvResponse[]) => this.myCvs = cvs.map(cv => ({
         ...cv,
         createdAt: new Date(cv.createdAt)
       })),
@@ -133,4 +133,4 @@ export class StudentDashboardComponent implements OnInit {
       }
     });
   }
-} 
+}

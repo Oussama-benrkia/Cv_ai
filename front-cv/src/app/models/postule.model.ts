@@ -4,12 +4,13 @@ export interface PostuleRequest {
   postId: number;
   cvId: number;
 }
+
 export interface PostuleResponse {
-  id: number;
-  post: Post;
   postId: number;
+  description: string;
+  message: string;
+  pourcentage: number;
+  creatAt: string;
   etudiantId: number;
-  description:string;
-  creatAt:Date;
   status: string;
 }

@@ -43,7 +43,7 @@
 .dashboard-card {
   height: 100%;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s, box-shadow 0.2s;
   background: white;
   overflow: hidden;
@@ -51,7 +51,7 @@
 
 .dashboard-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .header-icon {
@@ -133,15 +133,15 @@
   .dashboard-container {
     padding: 16px;
   }
-  
+
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .action-button {
     opacity: 1;
   }
-  
+
   .header-count {
     display: none;
   }
@@ -163,4 +163,4 @@
 .action-buttons {
   display: flex;
   gap: 8px;
-} 
+}
