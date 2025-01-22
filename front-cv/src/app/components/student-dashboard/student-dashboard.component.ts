@@ -7,13 +7,22 @@ import { PostuleService } from '../../services/postule-service';
 import { CvService } from '../../services/cv-service';
 import { MatDialog } from '@angular/material/dialog';
 import { CvUploadComponent } from '../cv-upload/cv-upload.component';
+import { MatSnackBar } from '@angular/material/snack-bar'; // Add this import
 
+import { MatCardModule } from '@angular/material/card'; // Import MatCardModule
+import { MatIconModule } from '@angular/material/icon'; // Import MatIconModule if you're using mat-icon
+import { MatButtonModule } from '@angular/material/button'; // Import MatButtonModule if you're using mat-button
+import { MatMenuModule } from '@angular/material/menu'; // Import MatMenuModule if you're using mat-menu
+import { MatListModule } from '@angular/material/list'; // Import MatListModule if you're using mat-list
+import { MatDialogModule } from '@angular/material/dialog'; // Import MatDialogModule if you're using MatDialog
 @Component({
   selector: 'app-student-dashboard',
   templateUrl: './student-dashboard.component.html',
   styleUrls: ['./student-dashboard.component.css']
 })
 export class StudentDashboardComponent implements OnInit {
+  myCvs: CvResponse[] = [];
+
   myApplications: PostuleResponse[] = [
     {
       postId: 1,
@@ -44,20 +53,20 @@ export class StudentDashboardComponent implements OnInit {
     }
   ];
 
-  myCvs: CvResponse[] = [
-    {
-      id: 1,
-      titre: 'Software Developer CV',
-      path: '/path/to/cv1',
-      createdAt: new Date('2024-01-01')
-    },
-    {
-      id: 2,
-      titre: 'Web Developer CV',
-      path: '/path/to/cv2',
-      createdAt: new Date('2024-01-10')
-    }
-  ];
+  // myCvs: CvResponse[] = [
+  //   {
+  //     id: 1,
+  //     titre: 'Software Developer CV',
+  //     path: '/path/to/cv1',
+  //     createdAt: new Date('2024-01-01')
+  //   },
+  //   {
+  //     id: 2,
+  //     titre: 'Web Developer CV',
+  //     path: '/path/to/cv2',
+  //     createdAt: new Date('2024-01-10')
+  //   }
+  // ];
 
   recentPosts = [
     {
@@ -84,6 +93,7 @@ export class StudentDashboardComponent implements OnInit {
     private postService: PostService,
     private postuleService: PostuleService,
     private cvService: CvService,
+    private snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {}
 
@@ -100,11 +110,17 @@ export class StudentDashboardComponent implements OnInit {
 
     // Load CVs
     this.cvService.getAllCvsOfUserWithoutPagination().subscribe(
-      (cvs: CvResponse[]) => this.myCvs = cvs.map(cv => ({
-        ...cv,
-        createdAt: new Date(cv.createdAt)
-      })),
-      error => console.error('Error loading CVs:', error)
+      (response: CvResponse[]) => {
+        this.myCvs = response;
+      },
+      (error) => {
+        console.error('Error loading CVs:', error);
+        if (error.status === 403) {
+          this.snackBar.open('Access denied. Please log in again.', 'Close', { duration: 3000 });
+        } else {
+          this.snackBar.open('Failed to load CVs. Please try again.', 'Close', { duration: 3000 });
+        }
+      }
     );
 
     // Load recent job posts

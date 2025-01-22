@@ -76,6 +76,7 @@
 }
 
 .list-item {
+  display: flex;
   margin-bottom: 16px;
   border-radius: 8px;
   transition: background-color 0.2s;
@@ -107,7 +108,10 @@
   margin-right: 4px;
 }
 
+
+
 .action-button {
+  margin-left: 16px;
   opacity: 0;
   transition: opacity 0.2s;
 }
@@ -161,6 +165,6 @@
 }
 
 .action-buttons {
-  display: flex;
+  display: inline-block;
   gap: 8px;
 }

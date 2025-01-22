@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'user-dashboard', component: UserDashboardComponent },
   { path: '', component: MainDashboardComponent },
   { path: 'post/:id', component: PostDetailsComponent },
-  {path: 'student-dashboard',component: StudentDashboardComponent,},
+  { path: 'student-dashboard',component: StudentDashboardComponent,},
   {
     path: 'admin',
     component: AdminComponent,

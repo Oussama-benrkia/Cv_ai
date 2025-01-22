@@ -27,11 +27,19 @@ export class CvUploadComponent {
       return;
     }
 
+    const token = localStorage.getItem('authToken'); // Replace with your token retrieval logic
+    if (!token) {
+      this.snackBar.open('Authentication token is missing!', 'Fermer', {
+        duration: 3000,
+      });
+      return;
+    }
+
     const formData = new FormData();
     formData.append('file', this.selectedFile);
     formData.append('titre', this.titre);
 
-    this.cvService.uploadCv(formData).subscribe(
+    this.cvService.uploadCv(formData, token).subscribe(
       (response: CvResponse) => {
         this.snackBar.open('Cv a été ajoute avec succès!', 'Fermer', {
           duration: 3000,

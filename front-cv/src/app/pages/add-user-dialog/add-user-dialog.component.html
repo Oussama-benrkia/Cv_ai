@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Add New {{ data.role }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="userForm">
+    <mat-form-field appearance="outline">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="prenom" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="nom" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" type="password" required />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSave()" [disabled]="userForm.invalid" color="primary">Save</button>
+</mat-dialog-actions>

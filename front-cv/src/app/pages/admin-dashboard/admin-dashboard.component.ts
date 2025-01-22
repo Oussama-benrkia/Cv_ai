@@ -27,6 +27,8 @@ import { User, UserResponse } from '../../interfaces/user.interface';
 import { PostService } from '../../services/post.service';
 import { Post } from '../../interfaces/post.interface';
 import { CV, CVResponse } from '../../interfaces/cv.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { AddUserDialogComponent } from '../add-user-dialog/add-user-dialog.component';
 import { Application, ApplicationResponse } from '../../interfaces/application.interface';
 
 // Define interface for type safety
@@ -266,6 +268,7 @@ export class AdminDashboardComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private userService: UserService,
+    private dialog: MatDialog,
     private postService: PostService
   ) {
     this.totalElements = this.users.length;
@@ -345,7 +348,17 @@ export class AdminDashboardComponent implements OnInit {
 
   openAddUserDialog(role: 'STUDENT' | 'HR') {
     console.log(`Opening add ${role} dialog`);
-    // Implement dialog logic here
+    const dialogRef = this.dialog.open(AddUserDialogComponent, {
+      width: '400px',
+      data: { role },
+    });
+  
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('User added successfully:', result);
+        // Optionally, refresh the user list or show a success message
+      }
+    });
   }
 
   setActiveSection(section: string) {

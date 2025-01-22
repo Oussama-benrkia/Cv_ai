@@ -39,6 +39,9 @@ import { MyApplicationsComponent } from './components/my-applications/my-applica
 import { MatTabsModule } from '@angular/material/tabs';
 import { MainDashboardComponent } from './components/main-dashboard/main-dashboard.component';
 import { StudentDashboardComponent } from './components/student-dashboard/student-dashboard.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { AddUserDialogComponent } from './pages/add-user-dialog/add-user-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -57,7 +60,8 @@ import { StudentDashboardComponent } from './components/student-dashboard/studen
     CvUploadComponent,
     MyApplicationsComponent,
     MainDashboardComponent,
-    StudentDashboardComponent
+    StudentDashboardComponent,
+    AddUserDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -65,10 +69,7 @@ import { StudentDashboardComponent } from './components/student-dashboard/studen
     FormsModule,
     RouterModule,
     HttpClientModule,
-    FontAwesomeModule
-  ],
-  providers: [
-    provideHttpClient(withInterceptorsFromDi()),
+    FontAwesomeModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
@@ -86,6 +87,10 @@ import { StudentDashboardComponent } from './components/student-dashboard/studen
     MatTabsModule,
     MatMenuModule,
     MatDividerModule
+  ],
+  providers: [
+    provideHttpClient(withInterceptorsFromDi()),
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })

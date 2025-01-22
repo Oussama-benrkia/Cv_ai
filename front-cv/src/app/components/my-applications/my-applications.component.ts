@@ -4,6 +4,8 @@ import {PostuleService} from '../../services/postule-service';
 import {PageResponse} from '../../models/page-response-model';
 
 
+
+
 @Component({
   selector: 'app-my-applications',
   templateUrl: './my-applications.component.html',

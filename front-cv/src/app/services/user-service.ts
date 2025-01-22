@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {environment} from '../../environments/environment';
 import {UserResponse} from '../models/user-model';
@@ -10,7 +10,7 @@ import {PageResponse} from '../models/page-response-model';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = `${environment.apiUrl}/user`;
+  private apiUrl = `${environment.apiUrl}/api/user`;
   constructor(private http: HttpClient) { }
 
   findById(id: number): Observable<UserResponse> {
@@ -48,5 +48,17 @@ export class UserService {
   }
   delete(id:number):Observable<void>{
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  addUser(userData: {
+    prenom: string;
+    nom: string;
+    email: string;
+    password: string;
+    role: string;
+  }): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(this.apiUrl, userData, { headers });
   }
 }
